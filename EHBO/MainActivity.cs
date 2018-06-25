@@ -45,6 +45,7 @@ namespace EHBO
         TextView textViewServerConnect;
         //snooze stuff
         private Button snooze;
+        public bool aan;
 
         //socket connect
         Button autoConnect;
@@ -142,13 +143,14 @@ namespace EHBO
 
         private void Set_Click(object sender, EventArgs e)
         {
-            time = tijd.Text;
-            timer = new Timer();
-            timer.Interval = 1000;
-            timer.Elapsed += Timer_Elapsed; // 1 seconds
-            timer.Start();
-            btnset.Enabled = false;
-            count = 0;
+            aan = true;
+            //time = tijd.Text;
+            //timer = new Timer();
+            //timer.Interval = 1000;
+            //timer.Elapsed += Timer_Elapsed; // 1 seconds
+            //timer.Start();
+            //btnset.Enabled = false;
+            //count = 0;
         }
 
         private void snooze_Click(object sender, EventArgs e)
@@ -163,6 +165,22 @@ namespace EHBO
             timer.Start();
             btnset.Enabled = false;
             count = 0;
+        }
+
+        public void WakeMeUp()
+        {
+            socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
+            socket.Send(System.Text.Encoding.ASCII.GetBytes("$l---------#"));
+            if (aan == true)
+            {
+                time = "60000";
+                timer = new Timer();
+                timer.Interval = 1000;
+                timer.Elapsed += Timer_Elapsed; // 1 seconds
+                timer.Start();
+                btnset.Enabled = false;
+                count = 0;
+            }
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -196,7 +214,7 @@ namespace EHBO
                     //toggle koffiezetapparaat
                     if (choice.koffieAan == true)
                     {
-                        socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
+                        socket.Send(System.Text.Encoding.ASCII.GetBytes("$a---------#"));
                     }
                 });
             }

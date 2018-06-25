@@ -59,6 +59,8 @@ namespace EHBO
             //Vibrate for 50 seconds. Have fun!    
             //vibro.Vibrate(50000);
             MainActivity.music.Start();
+            MainActivity main1 = new MainActivity();
+            main1.WakeMeUp();
         }
 
         void ImAwake()
