@@ -8,7 +8,7 @@ using Android.Content;
 
 namespace EHBO
 {
-    [Activity(Label = "Eerste Hulp Bij Opstaan", ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "music", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class musicActivity : Activity
     {
         //public static MediaPlayer music;

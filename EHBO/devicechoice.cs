@@ -13,7 +13,7 @@ using Android.Widget;
 
 namespace EHBO
 {
-    [Activity(Label = "Eerste Hulp Bij Opstaan", ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Eerste Hulp Bij Opstaan", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class deviceChoice
     {
         public bool koffieAan { get; set; }
