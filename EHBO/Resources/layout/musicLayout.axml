@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="@string/text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:gravity="center_horizontal" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="47.5dp"
+        android:id="@+id/selectMusic"
+        android:prompt="@string/musicSelector"
+        android:layout_marginBottom="148.5dp" />
+    <Button
+        android:text="@string/musicButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/musicButton" />
+</LinearLayout>
