@@ -32,7 +32,6 @@ namespace EHBO
         CheckBox checkbox2;
         public static MediaPlayer music;
         deviceChoice choice;
-        AlarmScreenActivity Alarm;
         Button chooseMusic;
         //timer stuff
         private Button btnCancel;
@@ -46,13 +45,12 @@ namespace EHBO
         TextView textViewServerConnect;
         //snooze stuff
         private Button snooze;
-        public bool aan;
 
         //socket connect
         Button autoConnect;
 
         //Timer timerClock, timerSockets;             // Timers   
-        public static Socket socket = null;                       // Socket   
+        Socket socket = null;                       // Socket   
         List<Tuple<string, TextView>> commandList = new List<Tuple<string, TextView>>();  // List for commands and response places on UI
         int listIndex = 0;
 
@@ -71,7 +69,6 @@ namespace EHBO
             checkbox2 = FindViewById<CheckBox>(Resource.Id.checkBox2);
 
             choice = new deviceChoice(true, true);
-            Alarm = new AlarmScreenActivity();
 
             //timer stuff
 
@@ -145,8 +142,6 @@ namespace EHBO
 
         private void Set_Click(object sender, EventArgs e)
         {
-            aan = true;
-            /*
             time = tijd.Text;
             timer = new Timer();
             timer.Interval = 1000;
@@ -154,7 +149,6 @@ namespace EHBO
             timer.Start();
             btnset.Enabled = false;
             count = 0;
-            */
         }
 
         private void snooze_Click(object sender, EventArgs e)
@@ -170,8 +164,6 @@ namespace EHBO
             btnset.Enabled = false;
             count = 0;
         }
-
-
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
