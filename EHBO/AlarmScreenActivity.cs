@@ -19,6 +19,7 @@ namespace EHBO
     {
         PowerManager.WakeLock wl;
         Vibrator vibro;
+        //socket = MainActivity.socket;
 
         MediaPlayer music;
 
@@ -67,6 +68,9 @@ namespace EHBO
             //Vibrate for 50 seconds. Have fun!    
             vibro.Vibrate(50000);
             music.Start();
+            MainActivity main1 = new MainActivity();
+            main1.WakeMeUp();
+            //socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
         }
 
         void ImAwake()
