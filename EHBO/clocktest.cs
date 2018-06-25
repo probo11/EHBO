@@ -19,7 +19,7 @@ using Java.Util;
 
 namespace EHBO
 {
-    [Activity(Label = "Set alarm", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Set alarm", ScreenOrientation = ScreenOrientation.Portrait)]
     public class Alarmcontroller : Activity
     {
         Toast repeating;
