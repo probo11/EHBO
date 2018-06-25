@@ -232,7 +232,7 @@ namespace EHBO
                     //toggle koffiezetapparaat
                     if (choice.koffieAan == true)
                     {
-                        socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
+                        socket.Send(System.Text.Encoding.ASCII.GetBytes("$a---------#")); //koffie zetten
                     }
 
                 });
