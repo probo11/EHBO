@@ -116,6 +116,9 @@ namespace EHBO
 			// aapt resource value: 0x7f0b000d
 			public const int ToggleLicht = 2131427341;
 			
+			// aapt resource value: 0x7f0b0007
+			public const int WekkerInstellen = 2131427335;
+			
 			// aapt resource value: 0x7f0b0018
 			public const int abort = 2131427352;
 			
@@ -163,9 +166,6 @@ namespace EHBO
 			
 			// aapt resource value: 0x7f0b0004
 			public const int textView1 = 2131427332;
-			
-			// aapt resource value: 0x7f0b0007
-			public const int textView2 = 2131427335;
 			
 			// aapt resource value: 0x7f0b0011
 			public const int textViewServerConnect = 2131427345;

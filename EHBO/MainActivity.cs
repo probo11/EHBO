@@ -28,6 +28,7 @@ namespace EHBO
         //controls on GUI
         Button ToggleKoffie;
         Button ToggleLicht;
+        Button WekkerInstellen;
         CheckBox checkbox1;
         CheckBox checkbox2;
         public static MediaPlayer music;
@@ -68,6 +69,7 @@ namespace EHBO
             chooseMusic = FindViewById<Button>(Resource.Id.goMusic);
             checkbox1 = FindViewById<CheckBox>(Resource.Id.checkBox1);
             checkbox2 = FindViewById<CheckBox>(Resource.Id.checkBox2);
+            WekkerInstellen = FindViewById<Button>(Resource.Id.WekkerInstellen);
 
             choice = new deviceChoice(true, true);
 
@@ -133,6 +135,15 @@ namespace EHBO
                 Intent intent = new Intent(this, typeof(musicActivity));
                 StartActivity(intent);
             };
+
+            WekkerInstellen.Click += (sender, e) =>
+            {
+
+                Intent intent = new Intent(this, typeof(Alarmcontroller));
+                StartActivity(intent);
+
+            };
+
         }
 
         //auto connect
@@ -166,6 +177,8 @@ namespace EHBO
             btnset.Enabled = false;
             count = 0;
         }
+
+        
 
         public void WakeMeUp()
         {
