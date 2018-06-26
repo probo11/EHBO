@@ -23,13 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/set" />
-    <TextView
-        android:text="look at this"
-        android:padding="20dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+    <Button
+        android:text="@string/buttonWekker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2" />
+        android:id="@+id/WekkerInstellen" />
     <TextView
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"

@@ -6,6 +6,8 @@
   <string name="text">Select Music</string>
   <string name="musicSelector">Select Music</string>
   <string name="buttonAuto">Button Auto</string>
+  <string name="buttonWekker">Wekker instellen</string>
+
   <string name="timer_state_value">OFF</string>
   <string name="arduino_server_text">Arduino server</string>
   <string name="arduino_server_connect">Not connected</string>
