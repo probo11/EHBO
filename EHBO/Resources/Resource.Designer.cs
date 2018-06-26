@@ -104,59 +104,56 @@ namespace EHBO
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b0016
-			public const int SnoozeButton = 2131427350;
-			
 			// aapt resource value: 0x7f0b0015
-			public const int StopAlarmButton = 2131427349;
+			public const int SnoozeButton = 2131427349;
+			
+			// aapt resource value: 0x7f0b0014
+			public const int StopAlarmButton = 2131427348;
+			
+			// aapt resource value: 0x7f0b000b
+			public const int ToggleKoffie = 2131427339;
 			
 			// aapt resource value: 0x7f0b000c
-			public const int ToggleKoffie = 2131427340;
-			
-			// aapt resource value: 0x7f0b000d
-			public const int ToggleLicht = 2131427341;
+			public const int ToggleLicht = 2131427340;
 			
 			// aapt resource value: 0x7f0b0007
 			public const int WekkerInstellen = 2131427335;
 			
-			// aapt resource value: 0x7f0b0018
-			public const int abort = 2131427352;
-			
-			// aapt resource value: 0x7f0b0010
-			public const int autoConnect = 2131427344;
-			
-			// aapt resource value: 0x7f0b000e
-			public const int checkBox1 = 2131427342;
+			// aapt resource value: 0x7f0b0017
+			public const int abort = 2131427351;
 			
 			// aapt resource value: 0x7f0b000f
-			public const int checkBox2 = 2131427343;
+			public const int autoConnect = 2131427343;
 			
-			// aapt resource value: 0x7f0b0017
-			public const int exit = 2131427351;
+			// aapt resource value: 0x7f0b000d
+			public const int checkBox1 = 2131427341;
 			
-			// aapt resource value: 0x7f0b000a
-			public const int goMusic = 2131427338;
+			// aapt resource value: 0x7f0b000e
+			public const int checkBox2 = 2131427342;
 			
-			// aapt resource value: 0x7f0b0014
-			public const int imageView1 = 2131427348;
+			// aapt resource value: 0x7f0b0016
+			public const int exit = 2131427350;
+			
+			// aapt resource value: 0x7f0b0009
+			public const int goMusic = 2131427337;
 			
 			// aapt resource value: 0x7f0b0013
-			public const int musicButton = 2131427347;
+			public const int imageView1 = 2131427347;
+			
+			// aapt resource value: 0x7f0b0012
+			public const int musicButton = 2131427346;
 			
 			// aapt resource value: 0x7f0b0002
 			public const int oneshotAlarm = 2131427330;
 			
-			// aapt resource value: 0x7f0b000b
-			public const int relativeLayout1 = 2131427339;
+			// aapt resource value: 0x7f0b000a
+			public const int relativeLayout1 = 2131427338;
 			
-			// aapt resource value: 0x7f0b0012
-			public const int selectMusic = 2131427346;
+			// aapt resource value: 0x7f0b0011
+			public const int selectMusic = 2131427345;
 			
 			// aapt resource value: 0x7f0b0006
 			public const int set = 2131427334;
-			
-			// aapt resource value: 0x7f0b0009
-			public const int snooze = 2131427337;
 			
 			// aapt resource value: 0x7f0b0003
 			public const int stoprepeatingAlarm = 2131427331;
@@ -167,8 +164,8 @@ namespace EHBO
 			// aapt resource value: 0x7f0b0004
 			public const int textView1 = 2131427332;
 			
-			// aapt resource value: 0x7f0b0011
-			public const int textViewServerConnect = 2131427345;
+			// aapt resource value: 0x7f0b0010
+			public const int textViewServerConnect = 2131427344;
 			
 			// aapt resource value: 0x7f0b0005
 			public const int tijd = 2131427333;
@@ -279,6 +276,12 @@ namespace EHBO
 		
 		public partial class String
 		{
+			
+			// aapt resource value: 0x7f07001d
+			public const int CancelAlarm = 2131165213;
+			
+			// aapt resource value: 0x7f07001c
+			public const int StartAlarm = 2131165212;
 			
 			// aapt resource value: 0x7f070017
 			public const int abort = 2131165207;

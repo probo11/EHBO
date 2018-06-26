@@ -36,11 +36,6 @@
         android:gravity="center"
         android:id="@+id/txtCountdown" />
     <Button
-        android:text="snooze"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/snooze" />
-    <Button
         android:text="Kies muziek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

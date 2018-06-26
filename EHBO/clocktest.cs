@@ -28,7 +28,7 @@ namespace EHBO
         AlarmManager am;
         PowerManager.WakeLock wl;
         Vibrator vibro;
-
+        private Button stoprepeatingAlarm;
         protected override void OnCreate(Bundle savedInstanceState)
         {
 
@@ -36,13 +36,13 @@ namespace EHBO
             SetContentView(Resource.Layout.Alarmcontroller_Layout);
             FindViewById<Button>(Resource.Id.oneshotAlarm).Click += StartAlarm;
             FindViewById<Button>(Resource.Id.stoprepeatingAlarm).Click += StopAlarm;
+            FindViewById<Button>(Resource.Id.oneshotAlarm).Click += StartAlarm;
             timeselector = FindViewById<TimePicker>(Resource.Id.timePicker);
             //timertext = FindViewById<EditText>(Resource.Id.timertext);
             vibro = (Vibrator)GetSystemService(Context.VibratorService);
             Java.Lang.Boolean q = new Java.Lang.Boolean(false);
 
             timeselector.SetIs24HourView(q);
-
 
         }
 
@@ -124,7 +124,8 @@ namespace EHBO
         void StopAlarm(object sender, EventArgs e)
         {
             // Add code to cancel the pending alarm here
-
+            Intent intent = new Intent(this, typeof(MainActivity));
+            StartActivity(intent);
         }
     }
     [BroadcastReceiver(Enabled = true)]

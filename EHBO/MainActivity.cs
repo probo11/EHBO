@@ -35,6 +35,7 @@ namespace EHBO
         deviceChoice choice;
         Button chooseMusic;
         //timer stuff
+
         private Button btnCancel;
         private Button btnset;
         private TextView txtCountdown;
@@ -79,11 +80,6 @@ namespace EHBO
             txtCountdown = FindViewById<TextView>(Resource.Id.txtCountdown);
             btnset.Click += Set_Click;
             tijd = FindViewById<EditText>(Resource.Id.tijd);
-
-            //snooze stuff
-            snooze = FindViewById<Button>(Resource.Id.snooze);
-            snooze.Click += snooze_Click;
-            snooze.Enabled = false;
 
             //autoconnect
             autoConnect = FindViewById<Button>(Resource.Id.autoConnect);
