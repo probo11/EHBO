@@ -42,6 +42,11 @@
 //#include <RemoteTransmitter.h>    // Remote Control, Action, old model
 //#include <RCSwitch.h>           // Remote Control, Action, new model
 
+#include <SimpleTimer.h>
+
+// the timer object
+SimpleTimer timer;
+
 // Set Ethernet Shield MAC address  (check yours)
 byte mac[] = { 0x40, 0x6c, 0x8f, 0x36, 0x84, 0x8a }; // Ethernet adapter shield S. Oosterhaven
 int ethPort = 3300;                                  // Take a free port (check your router)
@@ -50,9 +55,11 @@ int ethPort = 3300;                                  // Take a free port (check 
 #define lowPin       5  // output, always LOW
 #define highPin      6  // output, always HIGH
 #define switchPin    7  // input, connected to some kind of inputswitch
-#define ledPin       8  // output, led used for "connect state": blinking = searching; continuously = connected
-#define infoPin      9  // output, more information
+#define ledPin       2  // output, led used for "connect state": blinking = searching; continuously = connected
+#define infoPin      4  // output, more information
 #define analogPin    0  // sensor value
+#define trigPin      8  // output, more information
+#define echoPin      9  // sensor value
 
 EthernetServer server(ethPort);              // EthernetServer instance (listening on port <ethPort>).
 NewRemoteTransmitter apa3Transmitter(unitCodeApa3, RFPin, 260, 3);  // APA3 (Gamma) remote, use pin <RFPin> 
@@ -62,7 +69,15 @@ NewRemoteTransmitter apa3Transmitter(unitCodeApa3, RFPin, 260, 3);  // APA3 (Gam
 char actionDevice = 'A';                 // Variable to store Action Device id ('A', 'B', 'C')
 bool pinState = false;                   // Variable to store actual pin state
 bool pinChange = false;                  // Variable to store actual pin change
-int  sensorValue = 0;                    // Variable to store actual sensor value
+int  sensorValue = 0;                    // Varßiable to store actual sensor value
+int  sensorValue2 = 0;                    // Variable to store actual 2nd sensor value
+int kaku_unit = 0;                       //kaku unit nummer
+
+//default value voor sensor meetsnelheid
+int sensorReadInterval = 500;
+
+//drempelwaarde default opdracht 4 A
+int treshold = 30;
 
 void setup()
 {
@@ -78,6 +93,10 @@ void setup()
    pinMode(RFPin, OUTPUT);
    pinMode(ledPin, OUTPUT);
    pinMode(infoPin, OUTPUT);
+
+     pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+   
    
    //Default states
    digitalWrite(switchPin, HIGH);        // Activate pullup resistors (needed for input pin)
@@ -112,10 +131,15 @@ void setup()
    Serial.print(" ["); Serial.print(IPnr); Serial.print("] "); 
    Serial.print("  [Testcase: telnet "); Serial.print(Ethernet.localIP()); Serial.print(" "); Serial.print(ethPort); Serial.println("]");
    signalNumber(ledPin, IPnr);
+
+   readSensors();
 }
+
+      
 
 void loop()
 {
+         
    // Listen for incomming connection (app)
    EthernetClient ethernetClient = server.available();
    if (!ethernetClient) {
@@ -130,7 +154,10 @@ void loop()
    while (ethernetClient.connected()) 
    {
       checkEvent(switchPin, pinState);          // update pin state
-      sensorValue = readSensor(0, 100);         // update sensor value
+
+
+   //sensor timer
+   timer.run();
         
       // Activate pin based op pinState
       if (pinChange) {
@@ -150,10 +177,51 @@ void loop()
    Serial.println("Application disonnected");
 }
 
+
+//LDR en Ultrasone Sensor
+void readSensors(){ 
+Serial.println("sensor red");
+      sensorValue = readSensor(0, 100);         // update sensor value
+      sensorValue2 = readSensor2(0, 100);         // update sensor value
+      timer.setTimeout(sensorReadInterval, readSensors);
+  
+sensorValue = analogRead(analogPin); // read the value from the sensor
+
+   long duration, distance;
+  digitalWrite(trigPin, LOW);  // Added this line
+  delayMicroseconds(2); // Added this line
+  digitalWrite(trigPin, HIGH);
+//  delayMicroseconds(1000); - Removed this line
+  delayMicroseconds(10); // Added this line
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration * 0.0334) / 2;
+
+//als maximum of minimum afstand opdracht 4A
+  if (distance >= 200 || distance <= 0){
+    distance = 200;
+  }
+
+//zet sensor 2 waarde
+    sensorValue2 = distance;
+
+//als onder drempelwaarde
+    if (sensorValue2 < treshold){
+  apa3Transmitter.sendUnit(0, 1);  //kaku unit 0 aan
+    }
+    else {
+  apa3Transmitter.sendUnit(0, 0);  //kaku unit 0 uit  
+    }
+  
+Serial.println(sensorValue);
+Serial.println(sensorValue2);
+  
+}
+
 // Choose and switch your Kaku device, state is true/false (HIGH/LOW)
 void switchDefault(bool state)
 {   
-   apa3Transmitter.sendUnit(0, state);          // APA3 Kaku (Gamma)                
+   apa3Transmitter.sendUnit(kaku_unit, state);          // APA3 Kaku (Gamma)    //u2 = 0, u1 = 1, u0 =2  werkt niet          
    delay(100);
    //actionTransmitter.sendSignal(unitCodeActionOld, actionDevice, state);  // Action Kaku, old model
    //delay(100);
@@ -169,22 +237,175 @@ void executeCommand(char cmd)
          char buf[4] = {'\0', '\0', '\0', '\0'};
 
          // Command protocol
-         Serial.print("["); Serial.print(cmd); Serial.print("] -> ");
+         //10 letters defineren voor snelheid
+         //Serial.print("["); Serial.print(cmd); Serial.print("] -> ");
          switch (cmd) {
-         case 'a': // Report sensor value to the app  
+            case 'a': // Report sensor 1 value to the app  
             intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 1000;
+            //buf[0] = 'a';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: Case A "); Serial.println(buf);
+    break;
+            case 'b': // Report sensor 1 value to the app  
+            intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 2000;
+            //buf[0] = 'b';
             server.write(buf, 4);                             // response is always 4 chars (\n included)
             Serial.print("Sensor: "); Serial.println(buf);
-            break;
+    break;  
+            case 'c': // Report sensor 1 value to the app  
+            intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 3000;
+            //buf[0] = 'c';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;  
+            case 'd': // Report sensor 1 value to the app  
+            intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 4000;
+            //buf[0] = 'd';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;  
+            case 'e': // Report sensor 1 value to the app  
+            intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 5000;
+            //buf[0] = 'e';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;  
+            case 'f': // Report sensor 1 value to the app  
+            intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 6000;
+            //buf[0] = 'f';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;  
+            case 'g': // Report sensor 1 value to the app  
+            intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 7000;
+            //buf[0] = 'g';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;  
+            case 'h': // Report sensor 1 value to the app  
+            intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 8000;
+            //buf[0] = 'h';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;  
+            case 'j': // Report sensor 1 value to the app  
+            intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 9000;
+            //buf[0] = 'j';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;      
+            case 'k': // Report sensor 1 value to the app  
+            intToCharBuf(sensorValue, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 10000;
+            //buf[0] = 'k';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;       
+            case 'l': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            //buf[0] = 'l';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;                 
+            case 'm': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 2000;
+            //buf[0] = 'm';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;      
+            case 'n': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 3000;
+            //buf[0] = 'n';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;     
+            case 'o': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 4000;
+            //buf[0] = 'o';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;  
+            case 'p': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 5000;
+            //buf[0] = 'p';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;      
+            case 'q': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 6000;
+            //buf[0] = 'q';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;      
+            case 'r': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 7000;
+            //buf[0] = 'r';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;     
+            case 'w': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 8000;
+            //uf[0] = 'w';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;      
+            case 'x': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 9000;
+            //buf[0] = 'x';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);
+    break;      
+            case 'y': // Report sensor 2 value to the app  
+            intToCharBuf(sensorValue2, buf, 4);                // convert to charbuffer
+            sensorReadInterval = 10000;
+            //buf[0] = 'y';
+            server.write(buf, 4);                             // response is always 4 chars (\n included)
+            Serial.print("Sensor: "); Serial.println(buf);      
+    break;      
          case 's': // Report switch state to the app
             if (pinState) { server.write(" ON\n"); Serial.println("Pin state is ON"); }  // always send 4 chars
             else { server.write("OFF\n"); Serial.println("Pin state is OFF"); }
-            break;
+    break;
+    /*
+         case 'z': //drempelwaarde
+         
+    break;
+    */
          case 't': // Toggle state; If state is already ON then turn it OFF
+            if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
+            else { pinState = true; Serial.println("Set pin state to \"ON\""); } 
+            kaku_unit = 0; 
+            pinChange = true; 
+    break;
+        case 'u': // Toggle state; If state is already ON then turn it OFF
             if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
             else { pinState = true; Serial.println("Set pin state to \"ON\""); }  
             pinChange = true; 
-            break;
+            kaku_unit = 1;
+    break;
+        case 'v': // Toggle state; If state is already ON then turn it OFF
+            if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
+            else { pinState = true; Serial.println("Set pin state to \"ON\""); }  
+            pinChange = true; 
+            kaku_unit = 2;
+    break;                 
          case 'i':    
             digitalWrite(infoPin, HIGH);
             break;
@@ -197,6 +418,12 @@ void executeCommand(char cmd)
 int readSensor(int pn, int mx)
 {
   return map(analogRead(pn), 0, 1023, 0, mx-1);    
+}
+
+// read value from pin pn, return value is mapped between 0 and mx-1 for sensor2?
+int readSensor2(int pn2, int mx2)
+{
+  return map(analogRead(pn2), 0, 1023, 0, mx2-1);    
 }
 
 // Convert int <val> char buffer with length <len>
@@ -243,6 +470,17 @@ void blink(int pn)
   delay(100);
 }
 
+//blink led on pin <pn> for sensor2?
+/*
+void blink(int pn2)
+{
+  digitalWrite(pn2, HIGH); 
+  delay(100); 
+  digitalWrite(pn2, LOW); 
+  delay(100);
+}
+*/
+
 // Visual feedback on pin, based on IP number, used for debug only
 // Blink ledpin for a short burst, then blink N times, where N is (related to) IP-number
 void signalNumber(int pin, int n)
@@ -282,4 +520,3 @@ int getIPComputerNumberOffset(IPAddress address, int offset)
 {
     return getIPComputerNumber(address) - offset;
 }
-
