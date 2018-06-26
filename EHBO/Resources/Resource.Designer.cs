@@ -256,16 +256,16 @@ namespace EHBO
 		{
 			
 			// aapt resource value: 0x7f040000
-			public const int Discussion = 2130968576;
+			public const int Life = 2130968576;
 			
 			// aapt resource value: 0x7f040001
-			public const int Freaks = 2130968577;
+			public const int Tomaten = 2130968577;
 			
 			// aapt resource value: 0x7f040002
-			public const int Rattlesnake = 2130968578;
+			public const int Villian = 2130968578;
 			
 			// aapt resource value: 0x7f040003
-			public const int Sparkle = 2130968579;
+			public const int Wakker = 2130968579;
 			
 			static Raw()
 			{

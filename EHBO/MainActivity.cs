@@ -55,12 +55,13 @@ namespace EHBO
         List<Tuple<string, TextView>> commandList = new List<Tuple<string, TextView>>();  // List for commands and response places on UI
         int listIndex = 0;
 
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.Main);
+
+            MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Life);
 
             //toggle stuff
             ToggleKoffie = FindViewById<Button>(Resource.Id.ToggleKoffie);

@@ -29,10 +29,10 @@
   <string name="repeating_scheduled">repeating_scheduled</string>
   <string name="repeating_unscheduled">repeating_unscheduled</string>
   <string-array name="musicList">
-    <item>Discussion</item>
-    <item>Freaks</item>
-    <item>Rattlesnake</item>
-    <item>Sparkle</item>
+    <item>Life</item>
+    <item>Tomaten</item>
+    <item>Villian</item>
+    <item>Wakker</item>
   </string-array>
 </resources>
 
