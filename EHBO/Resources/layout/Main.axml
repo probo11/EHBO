@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/set" />
     <Button
-        android:text="Wekker instellen"
+        android:text="@string/buttonWekker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/WekkerInstellen" />

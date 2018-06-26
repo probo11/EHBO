@@ -6,6 +6,8 @@
   <string name="text">Select Music</string>
   <string name="musicSelector">Select Music</string>
   <string name="buttonAuto">Button Auto</string>
+  <string name="buttonWekker">Wekker instellen</string>
+
   <string name="timer_state_value">OFF</string>
   <string name="arduino_server_text">Arduino server</string>
   <string name="arduino_server_connect">Not connected</string>
@@ -31,10 +33,10 @@
   <string name="StartAlarm">Start Alarm</string>
     <string name="CancelAlarm">Cancel Alarm</string>
   <string-array name="musicList">
-    <item>Discussion</item>
-    <item>Freaks</item>
-    <item>Rattlesnake</item>
-    <item>Sparkle</item>
+    <item>Life</item>
+    <item>Tomaten</item>
+    <item>Villian</item>
+    <item>Wakker</item>
   </string-array>
 </resources>
 
