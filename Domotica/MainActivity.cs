@@ -280,20 +280,6 @@ namespace Domotica
             return result;
         }
 
-        public void CheckWater(string result)
-        {
-            if (result == "0")
-            {
-                //als er niet genoeg water in zit
-                //checkbox.enable = false;
-            }
-            else if (result == "1")
-            {
-                // als er wel genoeg water in zit
-                //checkbox.enable = true;
-            }
-        }
-
         //Update connection state label (GUI).
         public void UpdateConnectionState(int state, string text)
         {
