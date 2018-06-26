@@ -87,6 +87,10 @@ namespace EHBO
             autoConnect.Click += autoConnect_Click;
             textViewServerConnect = FindViewById<TextView>(Resource.Id.textViewServerConnect);
 
+            //Enabled
+            ToggleKoffie.Enabled = false;
+            ToggleLicht.Enabled = false;
+
             UpdateConnectionState(4, "Disconnected");
 
             //koffie keuze aan of uit
@@ -284,8 +288,11 @@ namespace EHBO
                         if (socket.Connected)
                         {
                             UpdateConnectionState(2, "Connected");
+                            ToggleLicht.Enabled = true;
+                            ToggleKoffie.Enabled = true;
                         }
                     }
+
                     catch (Exception exception)
                     {
                         //timerSockets.Enabled = false;
@@ -301,6 +308,8 @@ namespace EHBO
                 {
                     socket.Close(); socket = null;
                     UpdateConnectionState(4, "Disconnected");
+                    ToggleLicht.Enabled = false;
+                    ToggleKoffie.Enabled = false;
                 }
             });
         }
