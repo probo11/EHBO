@@ -40,11 +40,11 @@ namespace EHBO
 
             timeselector.SetIs24HourView(q);
 
-            CancelAlarm.Click += (sender, e) =>
-            {
-                Intent intent = new Intent(this, typeof(Alarmcontroller));
-                StartActivity(intent);
-            };
+            //CancelAlarm.Click += (sender, e) =>
+            //{
+            //    Intent intent = new Intent(this, typeof(Alarmcontroller));
+            //    StartActivity(intent);
+            //};
 
         }
 

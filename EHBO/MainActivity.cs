@@ -28,9 +28,10 @@ namespace EHBO
         //controls on GUI
         Button ToggleKoffie;
         Button ToggleLicht;
+        Button WekkerInstellen;
+
         CheckBox checkbox1;
         CheckBox checkbox2;
-        Button WekkerInstellen;
         public static MediaPlayer music;
         deviceChoice choice;
         Button chooseMusic;
@@ -140,8 +141,8 @@ namespace EHBO
 
             WekkerInstellen.Click += (sender, e) =>
             {
-                Intent intent = new Intent(this, typeof(Alarmcontroller));
-                StartActivity(intent);
+                Intent wekker = new Intent(this, typeof(Alarmcontroller));
+                StartActivity(wekker);
             };
 
         }
