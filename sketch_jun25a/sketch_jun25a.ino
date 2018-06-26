@@ -231,11 +231,11 @@ void executeCommand(char cmd)
       if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
       else { pinState = true; Serial.println("Set pin state to \"ON\""); } 
       kaku_unit = 0; 
-      pinChange = true; */
+      pinChange = true; 
       case 'k':
       pinMode(7, HIGH);
     break;
-    
+    */
     /*licht aaan uit*/
     case 'l': // Toggle state; If state is already ON then turn it OFF
       if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
