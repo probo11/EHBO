@@ -79,9 +79,6 @@ bool opdr5 = false;
 
 int sensorReadInterval = 500;
 
-int WaterSensor = 0; //Watersensor variable
-bool GenoegWater;
-
 void setup()
 {
    Serial.begin(9600);
@@ -248,21 +245,6 @@ sensorValue = analogRead(analogPin); // read the value from the sensor
     }
 }
 
-//watersensor lezen
-  WaterSensor = analogRead(A0);
-  Serial.println(WaterSensor);
-
-client.print(WaterSensor);
-      delay(150);
-
-      //drempel waardes
-  if(WaterSensor <300){
-    GenoegWater = false;
-  }
-  else{
-    GenoegWater = true;
-}
-
 // Choose and switch your Kaku device, state is true/false (HIGH/LOW)
 void switchDefault(bool state)
 {   
@@ -312,6 +294,9 @@ void executeCommand(char cmd)
             if (bufferGlobal != 0)
             {
               sensorReadInterval = 1000 * bufferGlobal.toInt();
+            } else
+            {
+              sensorReadInterval = 1000;
             }
             server.write(buf, 4);                             // response is always 4 chars (\n included)
             Serial.print("Sensor: Case A "); Serial.println(buf);
@@ -331,7 +316,7 @@ void executeCommand(char cmd)
             if (pinState) { server.write(" ON\n"); Serial.println("Pin state is ON"); }  // always send 4 chars
             else { server.write("OFF\n"); Serial.println("Pin state is OFF"); }
     break;
-    /*
+    
          case 't': // Toggle state; If state is already ON then turn it OFF
             if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
             else { pinState = true; Serial.println("Set pin state to \"ON\""); } 
@@ -343,42 +328,13 @@ void executeCommand(char cmd)
             else { pinState = true; Serial.println("Set pin state to \"ON\""); }  
             pinChange = true; 
             kaku_unit = 1;
-    break;
-     */
-     /*koffie aan/uit*/
-          case 'k': // Toggle state; If state is already ON then turn it OFF
-            if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
-            else { pinState = true; Serial.println("Set pin state to \"ON\""); } 
-            kaku_unit = 0; 
-            pinChange = true; 
-    break;
-    /*licht aaan uit*/
-        case 'l': // Toggle state; If state is already ON then turn it OFF
-            if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
-            else { pinState = true; Serial.println("Set pin state to \"ON\""); }  
-            pinChange = true; 
-            kaku_unit = 1;
     break;    
         case 'v': // Toggle state; If state is already ON then turn it OFF
             if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
             else { pinState = true; Serial.println("Set pin state to \"ON\""); }  
             pinChange = true; 
             kaku_unit = 2;
-    break;
-        case 'w': //sensor waardes van watersensor naar app
-            intToCharBuf(WaterSensor, buf, 4);                // convert to charbuffer
-            
-           if(GenoegWater = true){  
-            client.println("1");
-            }
-
-            else(GenoegWater = false){
-
-              client.println("0");
-            }          
-            server.write(buf, 4);                             // response is always 4 chars (\n included)
-            Serial.print("Waterniveau Status: "); Serial.println(buf);
-    break;                 
+    break;   
          case 'i':    
             digitalWrite(infoPin, HIGH);
     break;
