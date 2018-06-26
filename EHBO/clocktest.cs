@@ -24,18 +24,28 @@ namespace EHBO
         PowerManager.WakeLock wl;
         Vibrator vibro;
 
+        Button CancelAlarm;
+
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Alarmcontroller_Layout);
             FindViewById<Button>(Resource.Id.oneshotAlarm).Click += StartAlarm;
-            FindViewById<Button>(Resource.Id.stoprepeatingAlarm).Click += StopAlarm;
+            FindViewById<Button>(Resource.Id.stoprepeatingAlarm);
             timeselector = FindViewById<TimePicker>(Resource.Id.timePicker);
             //timertext = FindViewById<EditText>(Resource.Id.timertext);
             vibro = (Vibrator)GetSystemService(Context.VibratorService);
             Java.Lang.Boolean q = new Java.Lang.Boolean(false);
 
             timeselector.SetIs24HourView(q);
+
+            CancelAlarm.Click += (sender, e) =>
+            {
+                Intent intent = new Intent(this, typeof(Alarmcontroller));
+                StartActivity(intent);
+            };
+
         }
 
         /// <summary>
