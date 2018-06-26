@@ -82,8 +82,8 @@ namespace EHBO
             // vibro.Vibrate(50);
             //Use a calendar to convert hours and minutes to Java calendar. Set the alarm using the calendar
             // Tell the user about what we did.
-
-            repeating = Toast.MakeText(this, "Alarm set for: ", ToastLength.Long);
+            Toast.MakeText(this, "Je hebt een wekker gezet! Gefeliciteerd!",ToastLength.Short).Show();
+            
         }
 
         void StopAlarm(object sender, EventArgs e)

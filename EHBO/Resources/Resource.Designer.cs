@@ -115,11 +115,6 @@ namespace EHBO
 			
 			// aapt resource value: 0x7f0b000c
 			public const int ToggleLicht = 2131427340;
-			// aapt resource value: 0x7f0b0007
-			public const int WekkerInstellen = 2131427335;
-			
-			// aapt resource value: 0x7f0b0018
-			public const int abort = 2131427352;
 			
 			// aapt resource value: 0x7f0b0007
 			public const int WekkerInstellen = 2131427335;
@@ -169,8 +164,8 @@ namespace EHBO
 			// aapt resource value: 0x7f0b0004
 			public const int textView1 = 2131427332;
 			
-			// aapt resource value: 0x7f0b0011
-			public const int textViewServerConnect = 2131427345;
+			// aapt resource value: 0x7f0b0010
+			public const int textViewServerConnect = 2131427344;
 			
 			// aapt resource value: 0x7f0b0005
 			public const int tijd = 2131427333;
@@ -282,14 +277,14 @@ namespace EHBO
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f07001e
+			public const int CancelAlarm = 2131165214;
+			
 			// aapt resource value: 0x7f07001d
-			public const int CancelAlarm = 2131165213;
+			public const int StartAlarm = 2131165213;
 			
-			// aapt resource value: 0x7f07001c
-			public const int StartAlarm = 2131165212;
-			
-			// aapt resource value: 0x7f070017
-			public const int abort = 2131165207;
+			// aapt resource value: 0x7f070018
+			public const int abort = 2131165208;
 			
 			// aapt resource value: 0x7f070000
 			public const int app_name = 2131165184;
