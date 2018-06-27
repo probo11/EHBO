@@ -43,6 +43,8 @@ namespace EHBO
             //Cancel the vibration
             //vibro.Cancel();
             MainActivity.music.Stop();
+            Intent intent = new Intent(this, typeof(MainActivity));
+            StartActivity(intent);
         }
 
         /// <summary>

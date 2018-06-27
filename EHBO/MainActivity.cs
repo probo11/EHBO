@@ -22,9 +22,6 @@ namespace EHBO
     [Activity(Label = "Eerste Hulp Bij Opstaan", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
-        //variables
-        //public static bool koffieAan = deviceChoice.koffieAan;
-        //public static bool lichtAan = deviceChoice.lichtAan;
         //controls on GUI
         Button ToggleKoffie;
         Button ToggleLicht;
@@ -32,7 +29,7 @@ namespace EHBO
         CheckBox checkbox1;
         CheckBox checkbox2;
         public static MediaPlayer music;
-        deviceChoice choice;
+        static deviceChoice choice;
         Button chooseMusic;
         //timer stuff
 
@@ -48,8 +45,6 @@ namespace EHBO
         //snooze stuff
         private Button snooze;
         public bool aan;
-        public bool sok = false;
-        public static string ipi, pr;
 
         //socket connect
         Button autoConnect;
@@ -186,12 +181,19 @@ namespace EHBO
 
         public void WakeMeUp()
         {
+            if (choice.lichtAan == true)
+            {
+                socket.Send(System.Text.Encoding.ASCII.GetBytes("$l---------#"));
+                //string command2 = "";
+                //string command2 = "l";
+                //executeCommand(command2);
+            }
             if (choice.koffieAan == true)
             {
-                //socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
+                socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
                 //string command = "";
-                string command = "k";
-                executeCommand(command);
+                //string command = "k";
+                //executeCommand(command);
 
                 if (aan == true)
                 {
@@ -203,13 +205,6 @@ namespace EHBO
                     btnset.Enabled = false;
                     count = 0;
                 }
-            }
-            if (choice.lichtAan == true)
-            {
-                //socket.Send(System.Text.Encoding.ASCII.GetBytes("$l---------#"));
-                //string command2 = "";
-                string command2 = "l";
-                executeCommand(command2);
             }
         }
 
@@ -292,8 +287,8 @@ namespace EHBO
         // Connect to socket ip/prt (simple sockets)
         public void ConnectSocket(string ip, string prt)
         {
-            //RunOnUiThread(() =>
-            //{
+            RunOnUiThread(() =>
+            {
             if (socket == null) // create new socket
             {
                 UpdateConnectionState(1, "Connecting...");
@@ -306,9 +301,6 @@ namespace EHBO
                         UpdateConnectionState(2, "Connected");
                         ToggleLicht.Enabled = true;
                         ToggleKoffie.Enabled = true;
-                        sok = true;
-                        ipi = ip;
-                        pr = prt;
                     }
                 }
 
@@ -330,7 +322,7 @@ namespace EHBO
                 ToggleLicht.Enabled = false;
                 ToggleKoffie.Enabled = false;
             }
-            //});
+            });
         }
 
         public void CheckWater(string result)
