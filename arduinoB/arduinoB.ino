@@ -54,7 +54,6 @@ int ethPort = 3300;                                  // Take a free port (check 
 #define ledPin       1  // output, led used for "connect state": blinking = searching; continuously = connected
 #define infoPin      4  // output, more information
 #define analogPin    0  // sensor value
-//#define koffiePin    3  // 5 is aan   3 is knop boven   
 
 EthernetServer server(ethPort);              // EthernetServer instance (listening on port <ethPort>).
 NewRemoteTransmitter apa3Transmitter(unitCodeApa3, RFPin, 260, 8);  // APA3 (Gamma) remote, use pin <RFPin> 
@@ -68,8 +67,7 @@ int  sensorValue = 0;                    // Variable to store actual sensor valu
 int kaku_unit = 0;                       //kaku unit nummer
 String bufferGlobal = "";
 bool OK = false;
-int threshold = 200;
-bool opdr5 = false;
+bool kak = false;
 
 int sensorReadInterval = 500;
 
@@ -246,12 +244,21 @@ void executeCommand(char cmd)
       else { server.write("OFF\n"); Serial.println("Pin state is OFF"); }
     break;
     case 'l': // Toggle state; If state is already ON then turn it OFF
-      if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
-      else { pinState = true; Serial.println("Set pin state to \"ON\""); }   
-      kaku_unit = 1;
+//      if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
+//      else { pinState = true; Serial.println("Set pin state to \"ON\""); }   
+//      kaku_unit = 1;
+//
+//      if (pinState) { digitalWrite(ledPin, HIGH); switchDefault(true); }
+//      else { switchDefault(false); digitalWrite(ledPin, LOW); }
 
-      if (pinState) { digitalWrite(ledPin, HIGH); switchDefault(true); }
-      else { switchDefault(false); digitalWrite(ledPin, LOW); }
+      if (kak)
+      {
+        apa3Transmitter.sendUnit(1, 1);
+        kak = false;
+      } else {
+        apa3Transmitter.sendUnit(1, 0);
+        kak = true;
+      }
     break;    
     case 'v': // Toggle state; If state is already ON then turn it OFF
       if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
@@ -273,7 +280,7 @@ void executeCommand(char cmd)
       digitalWrite(infoPin, HIGH);
     break;
     case 'k': //koffiezetapparaat aan
-      digitalWrite(3, HIGH);
+      digitalWrite(3, HIGH); // 2 aan/uit // 3 2 koppen
       delay(150);
       digitalWrite(3, LOW);
     break;
