@@ -49,7 +49,7 @@ SimpleTimer timer;
 byte mac[] = { 0x40, 0x6c, 0x8f, 0x36, 0x84, 0x8a }; // Ethernet adapter shield S. Oosterhaven
 int ethPort = 3300;                                  // Take a free port (check your router)
 
-#define RFPin        3  // output, pin to control the RF-sender (and Click-On Click-Off-device)
+#define RFPin        8  // output, pin to control the RF-sender (and Click-On Click-Off-device)
 #define switchPin    7  // input, connected to some kind of inputswitch
 #define ledPin       2  // output, led used for "connect state": blinking = searching; continuously = connected
 #define infoPin      4  // output, more information
