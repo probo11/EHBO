@@ -1,9 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+   <style name="MyTheme.Base" parent="Theme.AppCompat.Light">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme">
-        <!-- Customize your theme here. -->
-  
-    </style>
+     <item name="colorPrimary">@color/colorPrimary</item>
+     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+     <item name="colorAccent">@color/colorAccent</item>
+      <!--<item name="textViewStyle">@style/MytextViewStyle</item>-->
 
-</resources>
+     <item name="android:windowBackground">@drawable/background_image_dark</item>
+   </style>
+   <style name="MyTheme" parent="MyTheme.Base">
+     
+   </style>
+
+<style name="MytextViewStyle" parent="@android:style/Widget.TextView">
+       <item name="android:background">#333333</item>
+       <item name="android:textColor">#ffffff</item>
+   </style>
+
+  </resources>

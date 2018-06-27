@@ -28,6 +28,8 @@
   <string name="one_shot_scheduled">one_shot_scheduled</string>
   <string name="repeating_scheduled">repeating_scheduled</string>
   <string name="repeating_unscheduled">repeating_unscheduled</string>
+  <string name="home_button">Home</string>
+  <string name="wekker_button">Wekker</string>
   <string-array name="musicList">
     <item>Discussion</item>
     <item>Freaks</item>

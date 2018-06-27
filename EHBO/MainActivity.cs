@@ -20,7 +20,7 @@ using Android.Net;
 
 namespace EHBO
 {
-    [Activity(Label = "Eerste Hulp Bij Opstaan", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Eerste Hulp Bij Opstaan", ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
         //variables
@@ -359,11 +359,14 @@ namespace EHBO
         {
             switch (item.ItemId)
             {
-                case Resource.Id.exit:
+                case Resource.Id.menu_home:
                     //Force quit the application.
-                    System.Environment.Exit(0);
+                    Intent home = new Intent(this, typeof(MainActivity));
+                    StartActivity(home);
                     return true;
-                case Resource.Id.abort:
+                case Resource.Id.menu_wekker:
+                    Intent wekker = new Intent(this, typeof(Alarmcontroller));
+                    StartActivity(wekker);
                     return true;
             }
             return base.OnOptionsItemSelected(item);

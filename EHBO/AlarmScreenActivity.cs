@@ -11,17 +11,26 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Support;
+using Android.Support.Design.Widget;
+using Android.Support.V4.Widget;
+using Android.Support.V7.Widget;
+using Android.Support.V7.App;
+using Android.Support.V7.AppCompat;
+
+
 
 namespace EHBO
 {
     [Activity(Label = "AlarmScreenActivity", ScreenOrientation = ScreenOrientation.Portrait)]
-    public class AlarmScreenActivity : Activity
+    public class AlarmScreenActivity : AppCompatActivity
     {
         PowerManager.WakeLock wl;
         Vibrator vibro;
 
         MediaPlayer music;
-
+        //Nav code
+        DrawerLayout drawerLayout;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             SetContentView(Resource.Layout.Wakescreen_Layout);
@@ -33,12 +42,11 @@ namespace EHBO
 
             base.OnCreate(savedInstanceState);
 
-
-
-
+            //Nav code
 
             // Create your application here
         }
+        
         /// <summary>
         /// Gets called when the Stop alarm button is pressed
         /// </summary>
@@ -86,6 +94,6 @@ namespace EHBO
                             WindowManagerFlags.DismissKeyguard |
                             WindowManagerFlags.TurnScreenOn);
         }
-
+       
     }
 }
