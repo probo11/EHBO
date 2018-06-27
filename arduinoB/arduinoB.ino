@@ -51,12 +51,13 @@ int ethPort = 3300;                                  // Take a free port (check 
 
 #define RFPin        8  // output, pin to control the RF-sender (and Click-On Click-Off-device)
 #define switchPin    7  // input, connected to some kind of inputswitch
-#define ledPin       2  // output, led used for "connect state": blinking = searching; continuously = connected
+#define ledPin       1  // output, led used for "connect state": blinking = searching; continuously = connected
 #define infoPin      4  // output, more information
 #define analogPin    0  // sensor value
+//#define koffiePin    3  // 5 is aan   3 is knop boven   
 
 EthernetServer server(ethPort);              // EthernetServer instance (listening on port <ethPort>).
-NewRemoteTransmitter apa3Transmitter(unitCodeApa3, RFPin, 260, 3);  // APA3 (Gamma) remote, use pin <RFPin> 
+NewRemoteTransmitter apa3Transmitter(unitCodeApa3, RFPin, 260, 8);  // APA3 (Gamma) remote, use pin <RFPin> 
 //ActionTransmitter actionTransmitter(RFPin);  // Remote Control, Action, old model (Impulse), use pin <RFPin>
 //RCSwitch mySwitch = RCSwitch();            // Remote Control, Action, new model (on-off), use pin <RFPin>
 
@@ -121,43 +122,51 @@ void setup()
    Serial.print("  [Testcase: telnet "); Serial.print(Ethernet.localIP()); Serial.print(" "); Serial.print(ethPort); Serial.println("]");
    signalNumber(ledPin, IPnr);
 
-   readSensors();
+   //readSensors();
    KoffieUit();
 }    
 
 void loop()
 {
    // Listen for incomming connection (app)
+   Serial.println("1");
    EthernetClient ethernetClient = server.available();
+   Serial.println("2");
    if (!ethernetClient) {
       blink(ledPin);
+      Serial.println("3");
       return; // wait for connection and blink LED
    }
-
+Serial.println("4");
    Serial.println("Application connected");
    digitalWrite(ledPin, LOW);
 
    // Do what needs to be done while the socket is connected.
    while (ethernetClient.connected()) 
    {
+    Serial.println("5");
       checkEvent(switchPin, pinState);          // update pin state
-
+Serial.println("6");
 
    //sensor timer
-   timer.run();
-        
+   //timer.run();
+        Serial.println("7");
       // Activate pin based op pinState
-      if (pinChange) {
-         if (pinState) { digitalWrite(ledPin, HIGH); switchDefault(true); }
-         else { switchDefault(false); digitalWrite(ledPin, LOW); }
-         pinChange = false;
-      }
+//      if (pinChange) {
+//         if (pinState) { digitalWrite(ledPin, HIGH); switchDefault(true); }
+//         else { switchDefault(false); digitalWrite(ledPin, LOW); }
+//         pinChange = false;
+//         Serial.println("21");
+//      }
+
+      Serial.println("22");
    
       // Execute when byte is received.
       while (ethernetClient.available())
       {
+        Serial.println("23");
          char inByte = ethernetClient.read();   // Get byte from the client.
-
+        Serial.println("24");
          bufferGlobal += inByte;
          if (inByte == '#')
          {
@@ -168,16 +177,21 @@ void loop()
          }
        
          //executeCommand(inByte);                // Wait for command to execute
-         inByte = NULL;                         // Reset the read byte.
-      } 
+         inByte = NULL;
+         
+         Serial.println("8");// Reset the read byte.
+      }
       if (OK)
       {
         byte sCount = bufferGlobal.indexOf("-");
         bufferGlobal.remove(sCount);
         char cmd = bufferGlobal[1];
         bufferGlobal.remove(0,2);
+        Serial.println("9");
         executeCommand(cmd);
+        Serial.println("10");
         bufferGlobal = "";
+        OK = false;
       }
    }
    Serial.println("Application disonnected");
@@ -233,9 +247,11 @@ void executeCommand(char cmd)
     break;
     case 'l': // Toggle state; If state is already ON then turn it OFF
       if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
-      else { pinState = true; Serial.println("Set pin state to \"ON\""); }  
-      pinChange = true; 
+      else { pinState = true; Serial.println("Set pin state to \"ON\""); }   
       kaku_unit = 1;
+
+      if (pinState) { digitalWrite(ledPin, HIGH); switchDefault(true); }
+      else { switchDefault(false); digitalWrite(ledPin, LOW); }
     break;    
     case 'v': // Toggle state; If state is already ON then turn it OFF
       if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
@@ -258,6 +274,8 @@ void executeCommand(char cmd)
     break;
     case 'k': //koffiezetapparaat aan
       digitalWrite(3, HIGH);
+      delay(150);
+      digitalWrite(3, LOW);
     break;
     /*
     case 'u': //koffiezetapparaat uit
