@@ -52,8 +52,6 @@ byte mac[] = { 0x40, 0x6c, 0x8f, 0x36, 0x84, 0x8a }; // Ethernet adapter shield 
 int ethPort = 3300;                                  // Take a free port (check your router)
 
 #define RFPin        3  // output, pin to control the RF-sender (and Click-On Click-Off-device)
-#define lowPin       5  // output, always LOW
-#define highPin      6  // output, always HIGH
 #define switchPin    7  // input, connected to some kind of inputswitch
 #define ledPin       2  // output, led used for "connect state": blinking = searching; continuously = connected
 #define infoPin      4  // output, more information
@@ -88,8 +86,6 @@ void setup()
    
    //Init I/O-pins
    pinMode(switchPin, INPUT);            // hardware switch, for changing pin state
-   pinMode(lowPin, OUTPUT);
-   pinMode(highPin, OUTPUT);
    pinMode(RFPin, OUTPUT);
    pinMode(ledPin, OUTPUT);
    pinMode(infoPin, OUTPUT);
@@ -100,8 +96,6 @@ void setup()
    
    //Default states
    digitalWrite(switchPin, HIGH);        // Activate pullup resistors (needed for input pin)
-   digitalWrite(lowPin, LOW);
-   digitalWrite(highPin, HIGH);
    digitalWrite(RFPin, LOW);
    digitalWrite(ledPin, LOW);
    digitalWrite(infoPin, LOW);
@@ -223,15 +217,6 @@ sensorValue = analogRead(analogPin); // read the value from the sensor
   distance = (duration * 0.0334) / 2;
 
 //drempelwaarde
-
-
-//als maximum of minimum afstand
-//  if (distance >= threshold || distance <= 0){
-//    distance = threshold;
-//  }
-
-
-  
 
 //zet sensor 2 waarde
     sensorValue2 = distance;
