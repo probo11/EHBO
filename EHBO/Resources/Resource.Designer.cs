@@ -2217,11 +2217,11 @@ namespace EHBO
 			// aapt resource value: 0x7f0900ac
 			public const int StopAlarmButton = 2131296428;
 			
-			// aapt resource value: 0x7f09008c
-			public const int ToggleKoffie = 2131296396;
+			// aapt resource value: 0x7f09008b
+			public const int ToggleKoffie = 2131296395;
 			
-			// aapt resource value: 0x7f09008d
-			public const int ToggleLicht = 2131296397;
+			// aapt resource value: 0x7f09008c
+			public const int ToggleLicht = 2131296396;
 			
 			// aapt resource value: 0x7f090097
 			public const int action0 = 2131296407;
@@ -2298,8 +2298,8 @@ namespace EHBO
 			// aapt resource value: 0x7f09002f
 			public const int auto = 2131296303;
 			
-			// aapt resource value: 0x7f090090
-			public const int autoConnect = 2131296400;
+			// aapt resource value: 0x7f09008f
+			public const int autoConnect = 2131296399;
 			
 			// aapt resource value: 0x7f090020
 			public const int beginning = 2131296288;
@@ -2322,11 +2322,11 @@ namespace EHBO
 			// aapt resource value: 0x7f090032
 			public const int center_vertical = 2131296306;
 			
-			// aapt resource value: 0x7f09008e
-			public const int checkBox1 = 2131296398;
+			// aapt resource value: 0x7f09008d
+			public const int checkBox1 = 2131296397;
 			
-			// aapt resource value: 0x7f09008f
-			public const int checkBox2 = 2131296399;
+			// aapt resource value: 0x7f09008e
+			public const int checkBox2 = 2131296398;
 			
 			// aapt resource value: 0x7f09005b
 			public const int checkbox = 2131296347;
@@ -2418,8 +2418,8 @@ namespace EHBO
 			// aapt resource value: 0x7f09003f
 			public const int @fixed = 2131296319;
 			
-			// aapt resource value: 0x7f09008a
-			public const int goMusic = 2131296394;
+			// aapt resource value: 0x7f090089
+			public const int goMusic = 2131296393;
 			
 			// aapt resource value: 0x7f090005
 			public const int home = 2131296261;
@@ -2532,8 +2532,8 @@ namespace EHBO
 			// aapt resource value: 0x7f09005d
 			public const int radio = 2131296349;
 			
-			// aapt resource value: 0x7f09008b
-			public const int relativeLayout1 = 2131296395;
+			// aapt resource value: 0x7f09008a
+			public const int relativeLayout1 = 2131296394;
 			
 			// aapt resource value: 0x7f090035
 			public const int right = 2131296309;
@@ -2592,14 +2592,14 @@ namespace EHBO
 			// aapt resource value: 0x7f090071
 			public const int search_voice_btn = 2131296369;
 			
-			// aapt resource value: 0x7f090092
-			public const int selectMusic = 2131296402;
+			// aapt resource value: 0x7f090091
+			public const int selectMusic = 2131296401;
 			
 			// aapt resource value: 0x7f090072
 			public const int select_dialog_listview = 2131296370;
 			
-			// aapt resource value: 0x7f090087
-			public const int set = 2131296391;
+			// aapt resource value: 0x7f090086
+			public const int set = 2131296390;
 			
 			// aapt resource value: 0x7f09005c
 			public const int shortcut = 2131296348;
@@ -2625,8 +2625,8 @@ namespace EHBO
 			// aapt resource value: 0x7f09002e
 			public const int snap = 2131296302;
 			
-			// aapt resource value: 0x7f090089
-			public const int snooze = 2131296393;
+			// aapt resource value: 0x7f090088
+			public const int snooze = 2131296392;
 			
 			// aapt resource value: 0x7f09004c
 			public const int spacer = 2131296332;
@@ -2676,11 +2676,11 @@ namespace EHBO
 			// aapt resource value: 0x7f090073
 			public const int textView = 2131296371;
 			
-			// aapt resource value: 0x7f090085
-			public const int textView1 = 2131296389;
+			// aapt resource value: 0x7f090092
+			public const int textView1 = 2131296402;
 			
-			// aapt resource value: 0x7f090091
-			public const int textViewServerConnect = 2131296401;
+			// aapt resource value: 0x7f090090
+			public const int textViewServerConnect = 2131296400;
 			
 			// aapt resource value: 0x7f090084
 			public const int text_input_password_toggle = 2131296388;
@@ -2691,8 +2691,8 @@ namespace EHBO
 			// aapt resource value: 0x7f09000d
 			public const int textinput_error = 2131296269;
 			
-			// aapt resource value: 0x7f090086
-			public const int tijd = 2131296390;
+			// aapt resource value: 0x7f090085
+			public const int tijd = 2131296389;
 			
 			// aapt resource value: 0x7f09009f
 			public const int time = 2131296415;
@@ -2724,8 +2724,8 @@ namespace EHBO
 			// aapt resource value: 0x7f09000b
 			public const int transition_scene_layoutid_cache = 2131296267;
 			
-			// aapt resource value: 0x7f090088
-			public const int txtCountdown = 2131296392;
+			// aapt resource value: 0x7f090087
+			public const int txtCountdown = 2131296391;
 			
 			// aapt resource value: 0x7f090009
 			public const int up = 2131296265;
@@ -3771,6 +3771,9 @@ namespace EHBO
 			
 			// aapt resource value: 0x7f0b0163
 			public const int Base_Widget_Design_TabLayout = 2131427683;
+			
+			// aapt resource value: 0x7f0b017c
+			public const int ButtonColor = 2131427708;
 			
 			// aapt resource value: 0x7f0b017b
 			public const int MyTheme = 2131427707;
