@@ -48,12 +48,15 @@ namespace EHBO
         //snooze stuff
         private Button snooze;
         public bool aan;
+        public bool sok = false;
+        public static string ipi, pr;
 
         //socket connect
         Button autoConnect;
 
         //Timer timerClock, timerSockets;             // Timers   
-        Socket socket = null;                       // Socket   
+
+        static Socket socket = null;                       // Socket   
         List<Tuple<string, TextView>> commandList = new List<Tuple<string, TextView>>();  // List for commands and response places on UI
         int listIndex = 0;
 
@@ -64,7 +67,7 @@ namespace EHBO
             SetContentView(Resource.Layout.Main);
 
             MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Life);
-
+            
             //toggle stuff
             ToggleKoffie = FindViewById<Button>(Resource.Id.ToggleKoffie);
             ToggleLicht = FindViewById<Button>(Resource.Id.ToggleLicht);
@@ -179,7 +182,7 @@ namespace EHBO
             count = 0;
         }
 
-        
+
 
         public void WakeMeUp()
         {
@@ -289,42 +292,45 @@ namespace EHBO
         // Connect to socket ip/prt (simple sockets)
         public void ConnectSocket(string ip, string prt)
         {
-            RunOnUiThread(() =>
+            //RunOnUiThread(() =>
+            //{
+            if (socket == null) // create new socket
             {
-                if (socket == null) // create new socket
+                UpdateConnectionState(1, "Connecting...");
+                try  // to connect to the server (Arduino).
                 {
-                    UpdateConnectionState(1, "Connecting...");
-                    try  // to connect to the server (Arduino).
+                    socket = new Socket(AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, ProtocolType.Tcp);
+                    socket.Connect(new IPEndPoint(IPAddress.Parse(ip), Convert.ToInt32(prt)));
+                    if (socket.Connected)
                     {
-                        socket = new Socket(AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, ProtocolType.Tcp);
-                        socket.Connect(new IPEndPoint(IPAddress.Parse(ip), Convert.ToInt32(prt)));
-                        if (socket.Connected)
-                        {
-                            UpdateConnectionState(2, "Connected");
-                            ToggleLicht.Enabled = true;
-                            ToggleKoffie.Enabled = true;
-                        }
+                        UpdateConnectionState(2, "Connected");
+                        ToggleLicht.Enabled = true;
+                        ToggleKoffie.Enabled = true;
+                        sok = true;
+                        ipi = ip;
+                        pr = prt;
                     }
+                }
 
-                    catch (Exception exception)
-                    {
-                        //timerSockets.Enabled = false;
-                        if (socket != null)
-                        {
-                            socket.Close();
-                            socket = null;
-                        }
-                        UpdateConnectionState(4, exception.Message);
-                    }
-                }
-                else // disconnect socket
+                catch (Exception exception)
                 {
-                    socket.Close(); socket = null;
-                    UpdateConnectionState(4, "Disconnected");
-                    ToggleLicht.Enabled = false;
-                    ToggleKoffie.Enabled = false;
+                    //timerSockets.Enabled = false;
+                    if (socket != null)
+                    {
+                        socket.Close();
+                        socket = null;
+                    }
+                    UpdateConnectionState(4, exception.Message);
                 }
-            });
+            }
+            else // disconnect socket
+            {
+                socket.Close(); socket = null;
+                UpdateConnectionState(4, "Disconnected");
+                ToggleLicht.Enabled = false;
+                ToggleKoffie.Enabled = false;
+            }
+            //});
         }
 
         public void CheckWater(string result)

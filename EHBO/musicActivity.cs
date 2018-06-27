@@ -29,6 +29,7 @@ namespace EHBO
 
             chooseMusic.Click += (sender, e) =>
             {
+                MainActivity.music.Stop();
                 Intent intent = new Intent(this, typeof(MainActivity));
                 StartActivity(intent);
             };

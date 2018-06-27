@@ -18,7 +18,7 @@ namespace EHBO
     public class AlarmScreenActivity : Activity
     {
         PowerManager.WakeLock wl;
-        //Vibrator vibro;
+       // Vibrator vibro;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -58,7 +58,7 @@ namespace EHBO
         {
             //Vibrate for 50 seconds. Have fun!    
             //vibro.Vibrate(50000);
-           // MainActivity.music.Start();
+            MainActivity.music.Start();
             MainActivity main1 = new MainActivity();
             main1.WakeMeUp();
         }
