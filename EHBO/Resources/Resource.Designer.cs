@@ -3778,9 +3778,6 @@ namespace EHBO
 			// aapt resource value: 0x7f0b017a
 			public const int MyTheme_Base = 2131427706;
 			
-			// aapt resource value: 0x7f0b017c
-			public const int MytextViewStyle = 2131427708;
-			
 			// aapt resource value: 0x7f0b001e
 			public const int Platform_AppCompat = 2131427358;
 			

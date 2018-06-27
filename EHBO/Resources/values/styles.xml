@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-   <style name="MyTheme.Base" parent="Theme.AppCompat.Light">
-
-     <item name="colorPrimary">@color/colorPrimary</item>
-     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-     <item name="colorAccent">@color/colorAccent</item>
-      <!--<item name="textViewStyle">@style/MytextViewStyle</item>-->
-
-     <item name="android:windowBackground">@drawable/background_image_dark</item>
+   <style name="MyTheme.Base" parent="@android:style/Theme.Material.Light.DarkActionBar">
+     <item name="android:windowActionBar">true</item>
    </style>
    <style name="MyTheme" parent="MyTheme.Base">
-     
+    
    </style>
 
-<style name="MytextViewStyle" parent="@android:style/Widget.TextView">
-       <item name="android:background">#333333</item>
-       <item name="android:textColor">#ffffff</item>
-   </style>
+
 
   </resources>
