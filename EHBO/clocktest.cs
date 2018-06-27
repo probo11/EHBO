@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -12,10 +11,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Java.Util;
-
-
-
-//using static Android.Widget.Toast;
 
 namespace EHBO
 {
@@ -28,14 +23,14 @@ namespace EHBO
         AlarmManager am;
         PowerManager.WakeLock wl;
         Vibrator vibro;
-
+        private Button stoprepeatingAlarm;
         protected override void OnCreate(Bundle savedInstanceState)
         {
-
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Alarmcontroller_Layout);
             FindViewById<Button>(Resource.Id.oneshotAlarm).Click += StartAlarm;
             FindViewById<Button>(Resource.Id.stoprepeatingAlarm).Click += StopAlarm;
+            FindViewById<Button>(Resource.Id.oneshotAlarm).Click += StartAlarm;
             timeselector = FindViewById<TimePicker>(Resource.Id.timePicker);
             //timertext = FindViewById<EditText>(Resource.Id.timertext);
             vibro = (Vibrator)GetSystemService(Context.VibratorService);
@@ -62,29 +57,9 @@ namespace EHBO
             int timeHour = Convert.ToInt32(timeselector.Hour);
             int timeMinutes = Convert.ToInt32(timeselector.Minute);
 
-
-
-
-            //else if(timeHour)
-            //{
-
-            //}
-
-
-            //if (timeHour < r.Hour)
-            //{
-            //    if (timeMinutes < r.Minute)
-            //    {
-
-            //    }
-
-            //}
-
-
             am = (AlarmManager)GetSystemService(AlarmService);
             Intent oneshotIntent = new Intent(this, typeof(OneShotAlarm));
             PendingIntent source = PendingIntent.GetBroadcast(this, 0, oneshotIntent, 0);
-
 
             // Check if we should set the time for later today or tomorrow
             DateTime r = DateTime.Now;
@@ -92,39 +67,30 @@ namespace EHBO
             if (timeHour < r.Hour || timeHour == r.Hour && timeMinutes < r.Minute)
             {
                 // Aantal uren is kleiner, zet de timer voor morgen
-
-
                 calendar.Set(CalendarField.HourOfDay, timeHour);
                 calendar.Set(CalendarField.Minute, timeMinutes);
                 calendar.Set(CalendarField.DayOfWeek, r.Day - 1);
-
-
             }
             else
             {
                 // Zet wekker voor vandaag
                 calendar.Set(CalendarField.HourOfDay, timeHour);
                 calendar.Set(CalendarField.Minute, timeMinutes);
-
             }
             am.Set(AlarmType.RtcWakeup, calendar.TimeInMillis, source);
             // Tiny vibration for happtic feedback
-           // vibro.Vibrate(50);
-
+            // vibro.Vibrate(50);
             //Use a calendar to convert hours and minutes to Java calendar. Set the alarm using the calendar
-
-
             // Tell the user about what we did.
-
-            repeating = Toast.MakeText(this, "Alarm set for: ", ToastLength.Long);
-
+            Toast.MakeText(this, "Je hebt een wekker gezet! Gefeliciteerd!",ToastLength.Short).Show();
+            
         }
-
 
         void StopAlarm(object sender, EventArgs e)
         {
             // Add code to cancel the pending alarm here
-
+            Intent intent = new Intent(this, typeof(MainActivity));
+            StartActivity(intent);
         }
         public override bool OnPrepareOptionsMenu(IMenu menu)
         {
@@ -168,8 +134,6 @@ namespace EHBO
             Intent q = new Intent(context, typeof(AlarmScreenActivity));
             q.AddFlags(ActivityFlags.NewTask);
             p.StartActivity(q);
-
         }
     }
-
 }

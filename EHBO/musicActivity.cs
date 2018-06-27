@@ -5,13 +5,14 @@ using Android.Media;
 using Android.Net;
 using Android.Content.PM;
 using Android.Content;
+using System.Timers;
 
 namespace EHBO
 {
-    [Activity(Label = "music", ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Eerste Hulp Bij Opstaan", ScreenOrientation = ScreenOrientation.Portrait)]
     public class musicActivity : Activity
     {
-        //public static MediaPlayer music;
+        Timer tim;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -28,6 +29,7 @@ namespace EHBO
 
             chooseMusic.Click += (sender, e) =>
             {
+                MainActivity.music.Stop();
                 Intent intent = new Intent(this, typeof(MainActivity));
                 StartActivity(intent);
             };
@@ -36,21 +38,53 @@ namespace EHBO
         {
             Spinner spinner = (Spinner)sender;
 
-            if (spinner.GetItemAtPosition(e.Position).ToString() == "Discussion")
+            if (spinner.GetItemAtPosition(e.Position).ToString() == "Life")
             {
-                MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Discussion);
+                MainActivity.music.Stop();
+                MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Life);
+                MainActivity.music.Start();
+                tim = new Timer() { Interval = 5000, Enabled = true };
+                tim.Elapsed += (obj, args) =>
+                {
+                    MainActivity.music.Stop();
+                    tim.Stop();
+                };
             }
-            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Freaks")
+            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Tomaten")
             {
-                MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Freaks);
+                MainActivity.music.Stop();
+                MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Tomaten);
+                MainActivity.music.Start();
+                tim = new Timer() { Interval = 5000, Enabled = true };
+                tim.Elapsed += (obj, args) =>
+                {
+                    MainActivity.music.Stop();
+                    tim.Stop();
+                };
             }
-            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Rattlesnake")
+            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Villian")
             {
-                MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Rattlesnake);
+                MainActivity.music.Stop();
+                MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Villian);
+                MainActivity.music.Start();
+                tim = new Timer() { Interval = 5000, Enabled = true };
+                tim.Elapsed += (obj, args) =>
+                {
+                    MainActivity.music.Stop();
+                    tim.Stop();
+                };
             }
-            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Sparkle")
+            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Wakker")
             {
-                MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Sparkle);
+                MainActivity.music.Stop();
+                MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Wakker);
+                MainActivity.music.Start();
+                tim = new Timer() { Interval = 5000, Enabled = true };
+                tim.Elapsed += (obj, args) =>
+                {
+                    MainActivity.music.Stop();
+                    tim.Stop();
+                };
             }
         }
     }

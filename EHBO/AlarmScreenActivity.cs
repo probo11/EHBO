@@ -26,23 +26,18 @@ namespace EHBO
     public class AlarmScreenActivity : AppCompatActivity
     {
         PowerManager.WakeLock wl;
-        Vibrator vibro;
+       // Vibrator vibro;
 
-        MediaPlayer music;
-        //Nav code
-        DrawerLayout drawerLayout;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             SetContentView(Resource.Layout.Wakescreen_Layout);
             FindViewById<Button>(Resource.Id.StopAlarmButton).Click += StopAlarm;
             FindViewById<Button>(Resource.Id.SnoozeButton).Click += Snooze;
+            WakeMeUpInside();
 
-
-            vibro = (Vibrator)GetSystemService(Context.VibratorService);
+            //vibro = (Vibrator)GetSystemService(Context.VibratorService);
 
             base.OnCreate(savedInstanceState);
-
-            //Nav code
 
             // Create your application here
         }
@@ -55,26 +50,28 @@ namespace EHBO
         void StopAlarm(object sender, EventArgs e)
         {
             //Cancel the vibration
-            vibro.Cancel();
-            music.Stop();
+            //vibro.Cancel();
+            MainActivity.music.Stop();
+            Intent intent = new Intent(this, typeof(MainActivity));
+            StartActivity(intent);
         }
 
         /// <summary>
         /// Gets called when the snooze button is pressed
         /// </summary>
         /// 
-      
-
         void Snooze(object sender, EventArgs e)
         {
 
         }
 
-        void WakeMeUpInside()
+        void WakeMeUpInside() //BringMeBackToLife()
         {
             //Vibrate for 50 seconds. Have fun!    
-            vibro.Vibrate(50000);
-            music.Start();
+            //vibro.Vibrate(50000);
+            MainActivity.music.Start();
+            MainActivity main1 = new MainActivity();
+            main1.WakeMeUp();
         }
 
         void ImAwake()

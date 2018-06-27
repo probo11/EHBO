@@ -15,6 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/set" />
+    <Button
+        android:text="@string/buttonWekker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/WekkerInstellen" />
     <TextView
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -22,11 +27,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/txtCountdown" />
-    <Button
-        android:text="snooze"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/snooze" />
     <Button
         android:text="Kies muziek"
         android:layout_width="match_parent"
@@ -58,8 +58,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/ToggleKoffie"
             android:id="@+id/checkBox1"
-            android:checked="true"
-            android:backgroundTint="#add8e6ff" />
+            android:checked="true" />
         <CheckBox
             android:text="Licht"
             android:layout_width="150dp"
@@ -67,8 +66,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/ToggleLicht"
             android:id="@+id/checkBox2"
-            android:checked="true"
-            android:backgroundTint="#adf3e5f5" />
+            android:checked="true" />
         <Button
             android:text="@string/buttonAuto"
             android:layout_width="150dp"

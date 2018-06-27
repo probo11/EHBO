@@ -6,7 +6,6 @@ using System.Timers;
 using Android.App;
 using Android.Content;
 using Android.Runtime;
-using EHBO;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
@@ -20,21 +19,20 @@ using Android.Net;
 
 namespace EHBO
 {
-    [Activity(Label = "Eerste Hulp Bij Opstaan", ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Eerste Hulp Bij Opstaan", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
-        //variables
-        //public static bool koffieAan = deviceChoice.koffieAan;
-        //public static bool lichtAan = deviceChoice.lichtAan;
         //controls on GUI
         Button ToggleKoffie;
         Button ToggleLicht;
+        Button WekkerInstellen;
         CheckBox checkbox1;
         CheckBox checkbox2;
         public static MediaPlayer music;
-        deviceChoice choice;
+        static deviceChoice choice;
         Button chooseMusic;
         //timer stuff
+
         private Button btnCancel;
         private Button btnset;
         private TextView txtCountdown;
@@ -46,15 +44,16 @@ namespace EHBO
         TextView textViewServerConnect;
         //snooze stuff
         private Button snooze;
+        public bool aan;
 
         //socket connect
         Button autoConnect;
 
         //Timer timerClock, timerSockets;             // Timers   
-        Socket socket = null;                       // Socket   
+
+        static Socket socket = null;                       // Socket   
         List<Tuple<string, TextView>> commandList = new List<Tuple<string, TextView>>();  // List for commands and response places on UI
         int listIndex = 0;
-
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -62,12 +61,15 @@ namespace EHBO
 
             SetContentView(Resource.Layout.Main);
 
+            MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Life);
+            
             //toggle stuff
             ToggleKoffie = FindViewById<Button>(Resource.Id.ToggleKoffie);
             ToggleLicht = FindViewById<Button>(Resource.Id.ToggleLicht);
             chooseMusic = FindViewById<Button>(Resource.Id.goMusic);
             checkbox1 = FindViewById<CheckBox>(Resource.Id.checkBox1);
             checkbox2 = FindViewById<CheckBox>(Resource.Id.checkBox2);
+            WekkerInstellen = FindViewById<Button>(Resource.Id.WekkerInstellen);
 
             choice = new deviceChoice(true, true);
 
@@ -78,21 +80,14 @@ namespace EHBO
             btnset.Click += Set_Click;
             tijd = FindViewById<EditText>(Resource.Id.tijd);
 
-            //snooze stuff
-            snooze = FindViewById<Button>(Resource.Id.snooze);
-            snooze.Click += snooze_Click;
-            snooze.Enabled = false;
-
-            Spinner selectMusic = FindViewById<Spinner>(Resource.Id.selectMusic);
-
-            selectMusic.ItemSelected += SelectMusic_ItemSelected;
-            var adapter = ArrayAdapter.CreateFromResource(this, Resource.Array.musicList, Android.Resource.Layout.SimpleSpinnerItem);
-            selectMusic.Adapter = adapter;
-
             //autoconnect
             autoConnect = FindViewById<Button>(Resource.Id.autoConnect);
             autoConnect.Click += autoConnect_Click;
             textViewServerConnect = FindViewById<TextView>(Resource.Id.textViewServerConnect);
+
+            //Enabled
+            ToggleKoffie.Enabled = false;
+            ToggleLicht.Enabled = false;
 
             UpdateConnectionState(4, "Disconnected");
 
@@ -134,57 +129,38 @@ namespace EHBO
                 };
             }
 
-
             chooseMusic.Click += (sender, e) =>
             {
                 Intent intent = new Intent(this, typeof(musicActivity));
                 StartActivity(intent);
             };
 
+            WekkerInstellen.Click += (sender, e) =>
+            {
+
+                Intent intent = new Intent(this, typeof(Alarmcontroller));
+                StartActivity(intent);
+
+            };
 
         }
-
-        private void SelectMusic_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
-        {
-            Spinner spinner = (Spinner)sender;
-
-            if (spinner.GetItemAtPosition(e.Position).ToString() == "Discussion")
-            {
-                music = MediaPlayer.Create(this, Resource.Raw.Discussion);
-            }
-            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Freaks")
-            {
-                music = MediaPlayer.Create(this, Resource.Raw.Freaks);
-            }
-            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Rattlesnake")
-            {
-                music = MediaPlayer.Create(this, Resource.Raw.Rattlesnake);
-            }
-            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Sparkle")
-            {
-                music = MediaPlayer.Create(this, Resource.Raw.Sparkle);
-            }
-        }
-
 
         //auto connect
         public void autoConnect_Click(object sender, EventArgs e)
         {
-            //autoConnect.Click += (sender, e) =>
-            //{
             AutoConnect();
-            //};
         }
 
         private void Set_Click(object sender, EventArgs e)
         {
-            time = tijd.Text;
-            timer = new Timer();
-            timer.Interval = 1000;
-            timer.Elapsed += Timer_Elapsed; // 1 seconds
-            timer.Start();
-            btnset.Enabled = false;
-            count = 0;
+            aan = true;
+            //time = tijd.Text;
+            //timer = new Timer();
+            //timer.Interval = 1000;
+            //timer.Elapsed += Timer_Elapsed; // 1 seconds
+            //timer.Start();
+            //btnset.Enabled = false;
+            //count = 0;
         }
 
         private void snooze_Click(object sender, EventArgs e)
@@ -199,6 +175,37 @@ namespace EHBO
             timer.Start();
             btnset.Enabled = false;
             count = 0;
+        }
+
+
+
+        public void WakeMeUp()
+        {
+            if (choice.lichtAan == true)
+            {
+                socket.Send(System.Text.Encoding.ASCII.GetBytes("$l---------#"));
+                //string command2 = "";
+                //string command2 = "l";
+                //executeCommand(command2);
+            }
+            if (choice.koffieAan == true)
+            {
+                socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
+                //string command = "";
+                //string command = "k";
+                //executeCommand(command);
+
+                if (aan == true)
+                {
+                    time = "60000";
+                    timer = new Timer();
+                    timer.Interval = 1000;
+                    timer.Elapsed += Timer_Elapsed; // 1 seconds
+                    timer.Start();
+                    btnset.Enabled = false;
+                    count = 0;
+                }
+            }
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -232,9 +239,8 @@ namespace EHBO
                     //toggle koffiezetapparaat
                     if (choice.koffieAan == true)
                     {
-                        socket.Send(System.Text.Encoding.ASCII.GetBytes("$a---------#")); //koffie zetten
+                        socket.Send(System.Text.Encoding.ASCII.GetBytes("$a---------#"));
                     }
-
                 });
             }
         }
@@ -258,7 +264,7 @@ namespace EHBO
                 {
                     //Store received bytes (always 4 bytes, ends with \n)
                     bytesRead = socket.Receive(buffer);  // If no data is available for reading, the Receive method will block until data is available,
-                                                         //Read available bytes.              // socket.Available gets the amount of data that has been received from the network and is available to be read
+                    //Read available bytes.              // socket.Available gets the amount of data that has been received from the network and is available to be read
                     while (socket.Available > 0) bytesRead = socket.Receive(buffer);
                     if (bytesRead == 4)
                         result = System.Text.Encoding.ASCII.GetString(buffer, 0, bytesRead - 1); // skip \n
@@ -283,36 +289,39 @@ namespace EHBO
         {
             RunOnUiThread(() =>
             {
-                if (socket == null)                                       // create new socket
+            if (socket == null) // create new socket
+            {
+                UpdateConnectionState(1, "Connecting...");
+                try  // to connect to the server (Arduino).
                 {
-                    UpdateConnectionState(1, "Connecting...");
-                    try  // to connect to the server (Arduino).
+                    socket = new Socket(AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, ProtocolType.Tcp);
+                    socket.Connect(new IPEndPoint(IPAddress.Parse(ip), Convert.ToInt32(prt)));
+                    if (socket.Connected)
                     {
-                        socket = new Socket(AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, ProtocolType.Tcp);
-                        socket.Connect(new IPEndPoint(IPAddress.Parse(ip), Convert.ToInt32(prt)));
-                        if (socket.Connected)
-                        {
-                            UpdateConnectionState(2, "Connected");
-                            //timerSockets.Enabled = true;                //Activate timer for communication with Arduino     
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        //timerSockets.Enabled = false;
-                        if (socket != null)
-                        {
-                            socket.Close();
-                            socket = null;
-                        }
-                        UpdateConnectionState(4, exception.Message);
+                        UpdateConnectionState(2, "Connected");
+                        ToggleLicht.Enabled = true;
+                        ToggleKoffie.Enabled = true;
                     }
                 }
-                else // disconnect socket
+
+                catch (Exception exception)
                 {
-                    socket.Close(); socket = null;
                     //timerSockets.Enabled = false;
-                    UpdateConnectionState(4, "Disconnected");
+                    if (socket != null)
+                    {
+                        socket.Close();
+                        socket = null;
+                    }
+                    UpdateConnectionState(4, exception.Message);
                 }
+            }
+            else // disconnect socket
+            {
+                socket.Close(); socket = null;
+                UpdateConnectionState(4, "Disconnected");
+                ToggleLicht.Enabled = false;
+                ToggleKoffie.Enabled = false;
+            }
             });
         }
 
@@ -326,10 +335,8 @@ namespace EHBO
             else if (result == "1")
             {
                 // als er wel genoeg water in zit
-
-                //checkbox.enable = true;
+                checkbox1.Enabled = true;
             }
-
         }
         //Close the connection (stop the threads) if the application stops.
         protected override void OnStop()
@@ -359,52 +366,15 @@ namespace EHBO
         {
             switch (item.ItemId)
             {
-                case Resource.Id.menu_home:
+                case Resource.Id.exit:
                     //Force quit the application.
-                    Intent home = new Intent(this, typeof(MainActivity));
-                    StartActivity(home);
+                    System.Environment.Exit(0);
                     return true;
-                case Resource.Id.menu_wekker:
-                    Intent wekker = new Intent(this, typeof(Alarmcontroller));
-                    StartActivity(wekker);
+                case Resource.Id.abort:
                     return true;
             }
             return base.OnOptionsItemSelected(item);
         }
-
-        //Check if the entered IP address is valid.
-        private bool CheckValidIpAddress(string ip)
-        {
-            if (ip != "")
-            {
-                //Check user input against regex (check if IP address is not empty).
-                Regex regex = new Regex("\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){4}\\b");
-                Match match = regex.Match(ip);
-                return match.Success;
-            }
-            else return false;
-        }
-
-        //Check if the entered port is valid.
-        private bool CheckValidPort(string port)
-        {
-            //Check if a value is entered.
-            if (port != "")
-            {
-                Regex regex = new Regex("[0-9]+");
-                Match match = regex.Match(port);
-
-                if (match.Success)
-                {
-                    int portAsInteger = Int32.Parse(port);
-                    //Check if port is in range.
-                    return ((portAsInteger >= 0) && (portAsInteger <= 65535));
-                }
-                else return false;
-            }
-            else return false;
-        }
-
 
         /// <summary>
         /// Tries all IP adresses in the 192.168.1 range on port 3300 , stops when it connects
@@ -421,46 +391,32 @@ namespace EHBO
                     {
                         return;
                     }
-
                 }
-                //ConnectSocket("192.168.1.2","3300");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-
-
-
         }
-
 
         //Update connection state label (GUI).
         public void UpdateConnectionState(int state, string text)
         {
             // connectButton
             string butConText = "Connect";  // default text
-            //bool butConEnabled = true;      // default state
             Color color = Color.Red;        // default color
-            // pinButton
-            //bool butPinEnabled = false;     // default state 
-
             //Set "Connect" button label according to connection state.
             if (state == 1)
             {
                 butConText = "Please wait";
                 color = Color.Orange;
-                //butConEnabled = false;
             }
             else
             if (state == 2)
             {
                 butConText = "Disconnect";
                 color = Color.Green;
-                //butPinEnabled = true;
             }
-
-
 
             //Edit the control's properties on the UI thread
             RunOnUiThread(() =>
@@ -468,18 +424,10 @@ namespace EHBO
                 textViewServerConnect.Text = text;
                 if (butConText != null)  // text existst
                 {
-
                     autoConnect.Text = butConText;
                     textViewServerConnect.SetTextColor(color);
-                    //buttonConnect.Enabled = butConEnabled;
                 }
-                //buttonChangePinState.Enabled = butPinEnabled;
             });
-
         }
-
-
-
-
     }
 }
