@@ -183,17 +183,30 @@ namespace EHBO
 
         public void WakeMeUp()
         {
-            socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
-            socket.Send(System.Text.Encoding.ASCII.GetBytes("$l---------#"));
-            if (aan == true)
+            if (choice.koffieAan == true)
             {
-                time = "60000";
-                timer = new Timer();
-                timer.Interval = 1000;
-                timer.Elapsed += Timer_Elapsed; // 1 seconds
-                timer.Start();
-                btnset.Enabled = false;
-                count = 0;
+                //socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
+                //string command = "";
+                string command = "k";
+                executeCommand(command);
+
+                if (aan == true)
+                {
+                    time = "60000";
+                    timer = new Timer();
+                    timer.Interval = 1000;
+                    timer.Elapsed += Timer_Elapsed; // 1 seconds
+                    timer.Start();
+                    btnset.Enabled = false;
+                    count = 0;
+                }
+            }
+            if (choice.lichtAan == true)
+            {
+                //socket.Send(System.Text.Encoding.ASCII.GetBytes("$l---------#"));
+                //string command2 = "";
+                string command2 = "l";
+                executeCommand(command2);
             }
         }
 
