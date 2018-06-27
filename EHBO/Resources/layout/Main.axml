@@ -68,7 +68,7 @@
             android:layout_below="@id/ToggleLicht"
             android:id="@+id/checkBox2"
             android:checked="true"
-            android:backgroundTint="#ad3a70d3" />
+            android:backgroundTint="#adf3e5f5" />
         <Button
             android:text="@string/buttonAuto"
             android:layout_width="150dp"
