@@ -351,31 +351,6 @@ namespace EHBO
         }
 
 
-        //Prepare the Screen's standard options menu to be displayed.
-        public override bool OnPrepareOptionsMenu(IMenu menu)
-        {
-            //Prevent menu items from being duplicated.
-            menu.Clear();
-
-            MenuInflater.Inflate(Resource.Menu.menu, menu);
-            return base.OnPrepareOptionsMenu(menu);
-        }
-
-        //Executes an action when a menu button is pressed.
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
-            {
-                case Resource.Id.exit:
-                    //Force quit the application.
-                    System.Environment.Exit(0);
-                    return true;
-                case Resource.Id.abort:
-                    return true;
-            }
-            return base.OnOptionsItemSelected(item);
-        }
-
         /// <summary>
         /// Tries all IP adresses in the 192.168.1 range on port 3300 , stops when it connects
         /// </summary>

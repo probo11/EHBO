@@ -14,7 +14,7 @@ using Java.Util;
 
 namespace EHBO
 {
-    [Activity(Label = "Set alarm", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Set alarm",  ScreenOrientation = ScreenOrientation.Portrait)]
     public class Alarmcontroller : Activity
     {
         Toast repeating;
@@ -92,32 +92,7 @@ namespace EHBO
             Intent intent = new Intent(this, typeof(MainActivity));
             StartActivity(intent);
         }
-        public override bool OnPrepareOptionsMenu(IMenu menu)
-        {
-            //Prevent menu items from being duplicated.
-            menu.Clear();
-
-            MenuInflater.Inflate(Resource.Menu.menu, menu);
-            return base.OnPrepareOptionsMenu(menu);
-        }
-
-        //Executes an action when a menu button is pressed.
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
-            {
-                case Resource.Id.menu_home:
-                    //Force quit the application.
-                    Intent home = new Intent(this, typeof(MainActivity));
-                    StartActivity(home);
-                    return true;
-                case Resource.Id.menu_wekker:
-                    Intent wekker = new Intent(this, typeof(Alarmcontroller));
-                    StartActivity(wekker);
-                    return true;
-            }
-            return base.OnOptionsItemSelected(item);
-        }
+      
     }
     [BroadcastReceiver(Enabled = true)]
     public class OneShotAlarm : BroadcastReceiver

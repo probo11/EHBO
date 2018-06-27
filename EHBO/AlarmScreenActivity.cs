@@ -23,7 +23,7 @@ using Android.Support.V7.AppCompat;
 namespace EHBO
 {
     [Activity(Label = "AlarmScreenActivity", ScreenOrientation = ScreenOrientation.Portrait)]
-    public class AlarmScreenActivity : AppCompatActivity
+    public class AlarmScreenActivity : Activity
     {
         PowerManager.WakeLock wl;
        // Vibrator vibro;
