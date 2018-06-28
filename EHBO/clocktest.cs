@@ -14,7 +14,7 @@ using Java.Util;
 
 namespace EHBO
 {
-    [Activity(Label = "Set alarm", ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Set alarm",  ScreenOrientation = ScreenOrientation.Portrait)]
     public class Alarmcontroller : Activity
     {
         Toast repeating;
@@ -92,6 +92,7 @@ namespace EHBO
             // Add code to cancel the pending alarm here
             Finish();
         }
+      
     }
     [BroadcastReceiver(Enabled = true)]
     public class OneShotAlarm : BroadcastReceiver

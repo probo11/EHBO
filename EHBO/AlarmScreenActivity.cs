@@ -11,6 +11,14 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Support;
+using Android.Support.Design.Widget;
+using Android.Support.V4.Widget;
+using Android.Support.V7.Widget;
+using Android.Support.V7.App;
+using Android.Support.V7.AppCompat;
+
+
 
 namespace EHBO
 {
@@ -32,6 +40,7 @@ namespace EHBO
 
             // Create your application here
         }
+        
         /// <summary>
         /// Gets called when the Stop alarm button is pressed
         /// </summary>
@@ -71,6 +80,6 @@ namespace EHBO
                             WindowManagerFlags.DismissKeyguard |
                             WindowManagerFlags.TurnScreenOn);
         }
-
+       
     }
 }

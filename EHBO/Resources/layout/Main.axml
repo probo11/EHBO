@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:text="Android TimerTask"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:textSize="25dp"
-        android:padding="20dp"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView1" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tijd"
         android:hint="instelbare tijd"
-        android:textColor="#ff2196f3" />
+        android:textColor="#ffffff" />
     <Button
         android:text="set countdown"
         android:layout_width="match_parent"
@@ -81,8 +73,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/autoConnect"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/checkBox1"
-            android:backgroundTint="#add8e6ff" />
+            android:layout_below="@id/checkBox1" />
         <TextView
             android:text="@string/arduino_server_connect"
             android:textAppearance="?android:attr/textAppearanceMedium"

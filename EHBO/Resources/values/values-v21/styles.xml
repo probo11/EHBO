@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<style name="EditText.MyBlue">
+
+  <!-- Change the background color to Xamarin blue: -->
+  <item name="cardBackgroundColor">@color/my_blue</item>
+
+  <!-- Make the corners very round: -->
+  <item name="TextColor">#ffffff</item>
+  <item name="cardCornerRadius">18dp</item>
+  <item name="cardCornerRadius">18dp</item>
+  
+</style>
+
+
