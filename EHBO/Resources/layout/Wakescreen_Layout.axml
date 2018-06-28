@@ -6,7 +6,7 @@
     android:minWidth="25px"
     android:minHeight="25px">
     <ImageView
-        android:src="@android:drawable/ic_menu_gallery"
+        android:src="@drawable/fullmetaljacket"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageView1" />

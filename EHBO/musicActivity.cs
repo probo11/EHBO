@@ -37,53 +37,44 @@ namespace EHBO
         {
             Spinner spinner = (Spinner)sender;
 
-            if (spinner.GetItemAtPosition(e.Position).ToString() == "Life")
+            MainActivity.music.Stop();
+            PlayMusic(spinner.GetItemAtPosition(e.Position).ToString());
+            MainActivity.music.Start();
+
+            if(tim != null)
+            {
+                tim.Stop();
+            }
+            
+            tim = new Timer() { Interval = 5000, Enabled = true };
+            tim.Elapsed += (obj, args) =>
             {
                 MainActivity.music.Stop();
+                tim.Stop();
+            };
+        }
+
+        public void PlayMusic(string musicn)
+        {
+            if (musicn == "Life")
+            {
                 MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Life);
-                MainActivity.music.Start();
-                tim = new Timer() { Interval = 5000, Enabled = true };
-                tim.Elapsed += (obj, args) =>
-                {
-                    MainActivity.music.Stop();
-                    tim.Stop();
-                };
+                AlarmScreenActivity.musicFinal = MediaPlayer.Create(this, Resource.Raw.Life);
             }
-            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Tomaten")
+            else if (musicn == "Tomaten")
             {
-                MainActivity.music.Stop();
                 MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Tomaten);
-                MainActivity.music.Start();
-                tim = new Timer() { Interval = 5000, Enabled = true };
-                tim.Elapsed += (obj, args) =>
-                {
-                    MainActivity.music.Stop();
-                    tim.Stop();
-                };
+                AlarmScreenActivity.musicFinal = MediaPlayer.Create(this, Resource.Raw.Tomaten);
             }
-            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Villian")
+            else if (musicn == "Villian")
             {
-                MainActivity.music.Stop();
                 MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Villian);
-                MainActivity.music.Start();
-                tim = new Timer() { Interval = 5000, Enabled = true };
-                tim.Elapsed += (obj, args) =>
-                {
-                    MainActivity.music.Stop();
-                    tim.Stop();
-                };
+                AlarmScreenActivity.musicFinal = MediaPlayer.Create(this, Resource.Raw.Villian);
             }
-            else if (spinner.GetItemAtPosition(e.Position).ToString() == "Wakker")
+            else if (musicn == "Wakker")
             {
-                MainActivity.music.Stop();
                 MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Wakker);
-                MainActivity.music.Start();
-                tim = new Timer() { Interval = 5000, Enabled = true };
-                tim.Elapsed += (obj, args) =>
-                {
-                    MainActivity.music.Stop();
-                    tim.Stop();
-                };
+                AlarmScreenActivity.musicFinal = MediaPlayer.Create(this, Resource.Raw.Wakker);
             }
         }
     }

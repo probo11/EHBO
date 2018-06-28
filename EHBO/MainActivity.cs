@@ -45,11 +45,10 @@ namespace EHBO
         //snooze stuff
         private Button snooze;
         public bool aan;
+        static bool licht = true, koffie = true;
 
         //socket connect
         Button autoConnect;
-
-        //Timer timerClock, timerSockets;             // Timers   
 
         static Socket socket = null;                       // Socket   
         List<Tuple<string, TextView>> commandList = new List<Tuple<string, TextView>>();  // List for commands and response places on UI
@@ -61,8 +60,9 @@ namespace EHBO
 
             SetContentView(Resource.Layout.Main);
 
-            MainActivity.music = MediaPlayer.Create(this, Resource.Raw.Life);
-            
+            music = MediaPlayer.Create(this, Resource.Raw.Life);
+            AlarmScreenActivity.musicFinal = MediaPlayer.Create(this, Resource.Raw.Life);
+
             //toggle stuff
             ToggleKoffie = FindViewById<Button>(Resource.Id.ToggleKoffie);
             ToggleLicht = FindViewById<Button>(Resource.Id.ToggleLicht);
@@ -92,7 +92,7 @@ namespace EHBO
             UpdateConnectionState(4, "Disconnected");
 
             //koffie keuze aan of uit
-            if (checkbox1.Checked == true)
+            if (checkbox1.Checked)
             {
                 choice.koffieAan = true;
             }
@@ -102,15 +102,18 @@ namespace EHBO
             }
 
             //licht keuze aan of uit
-            if (checkbox2.Checked == true)
+            checkbox2.Click += (o, e) =>
             {
-                choice.lichtAan = true;
-            }
-            else
-            {
-                choice.lichtAan = false;
-            }
-
+                if (checkbox2.Checked)
+                {
+                    licht = true;
+                }
+                else
+                {
+                    licht = false;
+                }
+            };
+            
             //koffie aan
             if (ToggleKoffie != null)  // if koffie button exists
             {
@@ -142,7 +145,6 @@ namespace EHBO
                 StartActivity(intent);
 
             };
-
         }
 
         //auto connect
@@ -169,7 +171,7 @@ namespace EHBO
             {
                 socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
             }
-            if (choice.lichtAan == true)
+            if (licht)
             {
                 socket.Send(System.Text.Encoding.ASCII.GetBytes("$l---------#"));
             } 
@@ -282,13 +284,6 @@ namespace EHBO
                     UpdateConnectionState(4, exception.Message);
                 }
             }
-            else // disconnect socket
-            {
-                socket.Close(); socket = null;
-                UpdateConnectionState(4, "Disconnected");
-                ToggleLicht.Enabled = false;
-                ToggleKoffie.Enabled = false;
-            }
             });
         }
 
@@ -317,37 +312,20 @@ namespace EHBO
             base.OnDestroy();
         }
 
-
-        //Prepare the Screen's standard options menu to be displayed.
-        public override bool OnPrepareOptionsMenu(IMenu menu)
-        {
-            //Prevent menu items from being duplicated.
-            menu.Clear();
-
-            MenuInflater.Inflate(Resource.Menu.menu, menu);
-            return base.OnPrepareOptionsMenu(menu);
-        }
-
-        //Executes an action when a menu button is pressed.
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
-            {
-                case Resource.Id.exit:
-                    //Force quit the application.
-                    System.Environment.Exit(0);
-                    return true;
-                case Resource.Id.abort:
-                    return true;
-            }
-            return base.OnOptionsItemSelected(item);
-        }
-
         /// <summary>
         /// Tries all IP adresses in the 192.168.1 range on port 3300 , stops when it connects
         /// </summary>
         void AutoConnect()
         {
+            if(socket != null)
+            {
+                socket.Close(); socket = null;
+                UpdateConnectionState(4, "Disconnected");
+                ToggleLicht.Enabled = false;
+                ToggleKoffie.Enabled = false;
+                return;
+            }
+
             try
             {
                 for (int i = 2; i < 256; i++)

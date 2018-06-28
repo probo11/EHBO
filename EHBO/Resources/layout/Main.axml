@@ -83,10 +83,5 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/checkBox2"
             android:textColor="@android:color/holo_red_dark" />
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="47.5dp"
-            android:id="@+id/selectMusic"
-            android:prompt="@string/musicSelector" />
     </RelativeLayout>
 </LinearLayout>
