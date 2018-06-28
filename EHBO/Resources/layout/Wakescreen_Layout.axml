@@ -5,19 +5,14 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px">
-  <ImageView
-      android:src="@android:drawable/ic_menu_gallery"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/imageView1" />
-  <Button
-      android:text="Stop alarm"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/StopAlarmButton" />
-  <Button
-      android:text="Snooze"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/SnoozeButton" />
+    <ImageView
+        android:src="@android:drawable/ic_menu_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView1" />
+    <Button
+        android:text="Stop alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/StopAlarmButton" />
 </LinearLayout>

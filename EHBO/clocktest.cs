@@ -83,14 +83,14 @@ namespace EHBO
             //Use a calendar to convert hours and minutes to Java calendar. Set the alarm using the calendar
             // Tell the user about what we did.
             Toast.MakeText(this, "Je hebt een wekker gezet! Gefeliciteerd!",ToastLength.Short).Show();
+            Finish();
             
         }
 
         void StopAlarm(object sender, EventArgs e)
         {
             // Add code to cancel the pending alarm here
-            Intent intent = new Intent(this, typeof(MainActivity));
-            StartActivity(intent);
+            Finish();
         }
     }
     [BroadcastReceiver(Enabled = true)]

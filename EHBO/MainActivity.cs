@@ -163,49 +163,16 @@ namespace EHBO
             //count = 0;
         }
 
-        private void snooze_Click(object sender, EventArgs e)
-        {
-            timer.Stop();
-            snooze.Enabled = false;
-            btnCancel.Enabled = true;
-            time = tijd.Text;
-            timer = new Timer();
-            timer.Interval = 1000;
-            timer.Elapsed += Timer_Elapsed; // 1 seconds
-            timer.Start();
-            btnset.Enabled = false;
-            count = 0;
-        }
-
-
-
         public void WakeMeUp()
         {
-            if (choice.lichtAan == true)
-            {
-                socket.Send(System.Text.Encoding.ASCII.GetBytes("$l---------#"));
-                //string command2 = "";
-                //string command2 = "l";
-                //executeCommand(command2);
-            }
             if (choice.koffieAan == true)
             {
                 socket.Send(System.Text.Encoding.ASCII.GetBytes("$k---------#"));
-                //string command = "";
-                //string command = "k";
-                //executeCommand(command);
-
-                if (aan == true)
-                {
-                    time = "60000";
-                    timer = new Timer();
-                    timer.Interval = 1000;
-                    timer.Elapsed += Timer_Elapsed; // 1 seconds
-                    timer.Start();
-                    btnset.Enabled = false;
-                    count = 0;
-                }
             }
+            if (choice.lichtAan == true)
+            {
+                socket.Send(System.Text.Encoding.ASCII.GetBytes("$l---------#"));
+            } 
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)

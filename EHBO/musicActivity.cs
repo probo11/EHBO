@@ -30,8 +30,7 @@ namespace EHBO
             chooseMusic.Click += (sender, e) =>
             {
                 MainActivity.music.Stop();
-                Intent intent = new Intent(this, typeof(MainActivity));
-                StartActivity(intent);
+                Finish();
             };
         }
         private void SelectMusic_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)

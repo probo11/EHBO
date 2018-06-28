@@ -24,7 +24,6 @@ namespace EHBO
         {
             SetContentView(Resource.Layout.Wakescreen_Layout);
             FindViewById<Button>(Resource.Id.StopAlarmButton).Click += StopAlarm;
-            FindViewById<Button>(Resource.Id.SnoozeButton).Click += Snooze;
             WakeMeUpInside();
 
             //vibro = (Vibrator)GetSystemService(Context.VibratorService);
@@ -43,17 +42,7 @@ namespace EHBO
             //Cancel the vibration
             //vibro.Cancel();
             MainActivity.music.Stop();
-            Intent intent = new Intent(this, typeof(MainActivity));
-            StartActivity(intent);
-        }
-
-        /// <summary>
-        /// Gets called when the snooze button is pressed
-        /// </summary>
-        /// 
-        void Snooze(object sender, EventArgs e)
-        {
-
+            Finish();
         }
 
         void WakeMeUpInside() //BringMeBackToLife()

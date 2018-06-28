@@ -104,9 +104,6 @@ namespace EHBO
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b0015
-			public const int SnoozeButton = 2131427349;
-			
 			// aapt resource value: 0x7f0b0014
 			public const int StopAlarmButton = 2131427348;
 			
@@ -119,8 +116,8 @@ namespace EHBO
 			// aapt resource value: 0x7f0b0007
 			public const int WekkerInstellen = 2131427335;
 			
-			// aapt resource value: 0x7f0b0017
-			public const int abort = 2131427351;
+			// aapt resource value: 0x7f0b0016
+			public const int abort = 2131427350;
 			
 			// aapt resource value: 0x7f0b000f
 			public const int autoConnect = 2131427343;
@@ -131,8 +128,8 @@ namespace EHBO
 			// aapt resource value: 0x7f0b000e
 			public const int checkBox2 = 2131427342;
 			
-			// aapt resource value: 0x7f0b0016
-			public const int exit = 2131427350;
+			// aapt resource value: 0x7f0b0015
+			public const int exit = 2131427349;
 			
 			// aapt resource value: 0x7f0b0009
 			public const int goMusic = 2131427337;
