@@ -127,44 +127,23 @@ void setup()
 void loop()
 {
    // Listen for incomming connection (app)
-   Serial.println("1");
    EthernetClient ethernetClient = server.available();
-   Serial.println("2");
    if (!ethernetClient) {
       blink(ledPin);
-      Serial.println("3");
       return; // wait for connection and blink LED
    }
-Serial.println("4");
    Serial.println("Application connected");
    digitalWrite(ledPin, LOW);
 
    // Do what needs to be done while the socket is connected.
    while (ethernetClient.connected()) 
    {
-    Serial.println("5");
       checkEvent(switchPin, pinState);          // update pin state
-Serial.println("6");
-
-   //sensor timer
-   //timer.run();
-        Serial.println("7");
-      // Activate pin based op pinState
-//      if (pinChange) {
-//         if (pinState) { digitalWrite(ledPin, HIGH); switchDefault(true); }
-//         else { switchDefault(false); digitalWrite(ledPin, LOW); }
-//         pinChange = false;
-//         Serial.println("21");
-//      }
-
-      Serial.println("22");
    
       // Execute when byte is received.
       while (ethernetClient.available())
       {
-        Serial.println("23");
          char inByte = ethernetClient.read();   // Get byte from the client.
-        Serial.println("24");
          bufferGlobal += inByte;
          if (inByte == '#')
          {
@@ -176,8 +155,6 @@ Serial.println("6");
        
          //executeCommand(inByte);                // Wait for command to execute
          inByte = NULL;
-         
-         Serial.println("8");// Reset the read byte.
       }
       if (OK)
       {
@@ -185,9 +162,7 @@ Serial.println("6");
         bufferGlobal.remove(sCount);
         char cmd = bufferGlobal[1];
         bufferGlobal.remove(0,2);
-        Serial.println("9");
         executeCommand(cmd);
-        Serial.println("10");
         bufferGlobal = "";
         OK = false;
       }
@@ -215,8 +190,8 @@ void readSensors(){
 }
 
 //koffie uitzetten
-void KoffieUit(){
-digitalWrite(3, LOW);  
+  void KoffieUit(){
+    digitalWrite(5, LOW);  
   }
 
 
@@ -244,13 +219,6 @@ void executeCommand(char cmd)
       else { server.write("OFF\n"); Serial.println("Pin state is OFF"); }
     break;
     case 'l': // Toggle state; If state is already ON then turn it OFF
-//      if (pinState) { pinState = false; Serial.println("Set pin state to \"OFF\""); }
-//      else { pinState = true; Serial.println("Set pin state to \"ON\""); }   
-//      kaku_unit = 1;
-//
-//      if (pinState) { digitalWrite(ledPin, HIGH); switchDefault(true); }
-//      else { switchDefault(false); digitalWrite(ledPin, LOW); }
-
       if (kak)
       {
         apa3Transmitter.sendUnit(1, 1);
